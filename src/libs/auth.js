@@ -1,11 +1,13 @@
 import auth0 from 'auth0-js'
 import history from './history'
 
+const base = process.env.PUBLIC_URL || 'http://localhost:3000'
+
 export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'kamataryo-sandbox.auth0.com',
     clientID: 'EyShL9IE4m0W29NmnCejWSF3I9r1VVdt',
-    redirectUri: 'http://localhost:3000/callback',
+    redirectUri: `${base}/callback`,
     audience: 'https://kamataryo-sandbox.auth0.com/userinfo',
     responseType: 'token id_token',
     scope: 'openid'
