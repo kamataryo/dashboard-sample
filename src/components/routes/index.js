@@ -6,12 +6,18 @@ import Home from './home'
 import Callback from './callback'
 
 export const Routes = () => {
+  const publicUrl = process.env.PUBLIC_URL || ''
+
   return (
     <Router history={history}>
       <div>
-        <Route path={'/'} render={() => <Auth />} exact />
-        <Route path={'/home'} render={() => <Home />} exact />
-        <Route path={'/callback'} render={() => <Callback />} exact />
+        <Route path={`${publicUrl}/`} render={() => <Auth />} exact />
+        <Route path={`${publicUrl}/home`} render={() => <Home />} exact />
+        <Route
+          path={`${publicUrl}/callback`}
+          render={() => <Callback />}
+          exact
+        />
       </div>
     </Router>
   )
