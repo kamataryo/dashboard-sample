@@ -7,7 +7,7 @@ import Callback from './callback'
 
 export const Routes = () => {
   return (
-    <Router history={history}>
+    <Router history={history} basename={process.env.PUBLIC_URL}>
       <div>
         <Route path={'/'} render={() => <Auth />} exact />
         <Route path={'/home'} render={() => <Home />} exact />
