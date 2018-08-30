@@ -7,8 +7,6 @@ const base =
   window.location.host +
   (process.env.PUBLIC_URL || '')
 
-console.log(`${base}/callback`)
-
 export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'kamataryo-sandbox.auth0.com',
@@ -27,9 +25,9 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-        history.replace('/home')
+        history.replace(`${process.env.PUBLIC_URL}/home`)
       } else if (err) {
-        history.replace('/home')
+        history.replace(`${process.env.PUBLIC_URL}/home`)
         console.error(err)
       }
     })
@@ -42,7 +40,7 @@ export default class Auth {
     localStorage.setItem('id_token', authResult.idToken)
     localStorage.setItem('expires_at', expiresAt)
     // navigate to the home route
-    history.replace('/home')
+    history.replace(`${process.env.PUBLIC_URL}/home`)
   }
 
   logout() {
@@ -51,8 +49,10 @@ export default class Auth {
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
 
-    // navigate to the home route
-    history.replace('/home')
+    this.auth0.logout({
+      clientID: 'EyShL9IE4m0W29NmnCejWSF3I9r1VVdt',
+      returnTo: `${base}/home`
+    })
   }
 
   isAuthenticated() {
