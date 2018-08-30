@@ -24,7 +24,7 @@ export class Header extends React.Component {
         <ul role={'navigation'}>
           <li>
             <Link
-              to={'/home'}
+              to={`${process.env.PUBLIC_URL}/home`}
               onClick={() => {
                 auth.logout()
                 this.forceUpdate()
@@ -34,7 +34,7 @@ export class Header extends React.Component {
             </Link>
           </li>
           <li>
-            <Link to={'/profile'}>profile</Link>
+            <Link to={`${process.env.PUBLIC_URL}/profile`}>profile</Link>
           </li>
         </ul>
       </div>
@@ -42,7 +42,7 @@ export class Header extends React.Component {
       <div>
         <ul role={'navigation'}>
           <li>
-            <Link to={'/'}>login</Link>
+            <Link to={`${process.env.PUBLIC_URL}/`}>login</Link>
           </li>
         </ul>
       </div>

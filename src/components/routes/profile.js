@@ -36,13 +36,15 @@ export class Profile extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
-    const { profile } = this.state
+    const {
+      profile: { sub: userId }
+    } = this.state
     // const { auth } = this.props
     return (
       <div>
         <h1>{'Profile'}</h1>
         <Header />
-        {JSON.stringify(profile)}
+        {'user id: ' + (userId || '')}
       </div>
     )
   }
