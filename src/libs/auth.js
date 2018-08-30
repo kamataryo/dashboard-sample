@@ -1,7 +1,13 @@
 import auth0 from 'auth0-js'
 import history from './history'
 
-const base = window.location.host + (process.env.PUBLIC_URL || '')
+const base =
+  window.location.protocol +
+  '//' +
+  window.location.host +
+  (process.env.PUBLIC_URL || '')
+
+console.log(`${base}/callback`)
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
