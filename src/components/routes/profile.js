@@ -5,9 +5,30 @@ import Auth from '../../libs/auth'
 
 import Header from '../layouts/header'
 
-export class Home extends React.Component {
+export class Profile extends React.Component {
   static propTypes = {
     auth: PropTypes.instanceOf(Auth).isRequired
+  }
+
+  /**
+   * constructor
+   * @param  {object} props React props.
+   * @return {void}
+   */
+  constructor(props) {
+    super(props)
+    this.state = { profile: {} }
+  }
+
+  /**
+   * componentDidMount
+   * @return {void}
+   */
+  componentDidMount() {
+    this.props.auth
+      .getProfile()
+      .then(profile => this.setState({ ...this.state, profile }))
+      .catch(console.error)
   }
 
   /**
@@ -15,11 +36,13 @@ export class Home extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
+    const { profile } = this.state
     // const { auth } = this.props
     return (
       <div>
-        <h1>home</h1>
+        <h1>{'Profile'}</h1>
         <Header />
+        {JSON.stringify(profile)}
       </div>
     )
   }
@@ -36,4 +59,4 @@ const mapStateToProps = (state, ownProps) => {
     auth: state.auth.driver
   }
 }
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps)(Profile)

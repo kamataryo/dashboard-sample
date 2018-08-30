@@ -18,6 +18,7 @@ export class AuthRoute extends React.Component {
    */
   componentDidMount() {
     const { auth } = this.props
+    console.log('login')
     auth.login()
   }
 
@@ -26,6 +27,7 @@ export class AuthRoute extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
+    console.log('auth')
     return null
   }
 }
