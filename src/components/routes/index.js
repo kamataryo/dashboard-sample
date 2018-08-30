@@ -8,7 +8,6 @@ import Callback from './callback'
 
 export const Routes = () => {
   const publicUrl = process.env.PUBLIC_URL || ''
-  console.log(publicUrl)
   return (
     <Router history={history}>
       <div>

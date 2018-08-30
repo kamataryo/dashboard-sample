@@ -17,6 +17,7 @@ export class Callback extends React.Component {
    * @return {void}
    */
   componentDidMount() {
+    console.log('processing callback')
     this.props.auth.handleAuthentication()
   }
 

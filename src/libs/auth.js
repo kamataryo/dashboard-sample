@@ -7,6 +7,8 @@ const base =
   window.location.host +
   (process.env.PUBLIC_URL || '')
 
+console.log(`base: ${base}`)
+
 export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'kamataryo-sandbox.auth0.com',
@@ -25,6 +27,7 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
+        console.log(`redirecting to ${process.env.PUBLIC_URL}/home`)
         history.replace(`${process.env.PUBLIC_URL}/home`)
       } else if (err) {
         history.replace(`${process.env.PUBLIC_URL}/home`)
