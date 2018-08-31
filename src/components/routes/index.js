@@ -12,12 +12,12 @@ export const Routes = () => {
       <div>
         <Route
           path={`${process.env.PUBLIC_URL}/`}
-          render={() => <Auth />}
+          render={() => <Home />}
           exact
         />
         <Route
-          path={`${process.env.PUBLIC_URL}/home`}
-          render={() => <Home />}
+          path={`${process.env.PUBLIC_URL}/auth`}
+          render={() => <Auth />}
           exact
         />
         <Route

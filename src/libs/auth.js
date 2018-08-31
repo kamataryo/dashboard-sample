@@ -27,10 +27,9 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-        console.log(`redirecting to ${process.env.PUBLIC_URL}/home`)
-        history.replace(`${process.env.PUBLIC_URL}/home`)
+        history.replace(`${process.env.PUBLIC_URL}/`)
       } else if (err) {
-        history.replace(`${process.env.PUBLIC_URL}/home`)
+        history.replace(`${process.env.PUBLIC_URL}/`)
         console.error(err)
       }
     })
@@ -43,7 +42,7 @@ export default class Auth {
     localStorage.setItem('id_token', authResult.idToken)
     localStorage.setItem('expires_at', expiresAt)
     // navigate to the home route
-    history.replace(`${process.env.PUBLIC_URL}/home`)
+    history.replace(`${process.env.PUBLIC_URL}/`)
   }
 
   logout() {
@@ -54,7 +53,7 @@ export default class Auth {
 
     this.auth0.logout({
       clientID: 'EyShL9IE4m0W29NmnCejWSF3I9r1VVdt',
-      returnTo: `${base}/home`
+      returnTo: `${base}/`
     })
   }
 
