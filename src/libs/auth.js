@@ -14,7 +14,7 @@ export default class Auth {
     redirectUri: `${base}/callback`,
     audience: 'https://kamataryo-sandbox.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: 'openid profile email'
   })
 
   login() {
@@ -22,6 +22,7 @@ export default class Auth {
   }
 
   handleAuthentication() {
+    console.log(window.location.hash)
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
@@ -49,8 +50,9 @@ export default class Auth {
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
 
+    // External Auth0's login webpage keeps session. This clean it.
     this.auth0.logout({
-      clientID: 'EyShL9IE4m0W29NmnCejWSF3I9r1VVdt',
+      clientID: 'FFVTXMqwdwHlVwwAJijY2tHIMieYv0qO',
       returnTo: `${base}/`
     })
   }
