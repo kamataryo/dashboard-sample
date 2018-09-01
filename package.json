@@ -25,6 +25,12 @@
   },
   "homepage": "https://kamataryo.github.io/sandbox_auth0_react",
   "devDependencies": {
-    "gh-pages": "^1.2.0"
+    "eslint": "^5.5.0",
+    "eslint-import-resolver-node": "^0.3.2",
+    "eslint-plugin-eslint-comments": "^3.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1",
+    "gh-pages": "^1.2.0",
+    "prettier-eslint-cli": "^4.7.1"
   }
 }
