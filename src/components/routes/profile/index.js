@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Auth from '../../../libs/auth'
-import Header from '../../layouts/header'
 import Input from './partials/input'
 
 import auth0 from 'auth0-js'
@@ -65,7 +64,6 @@ export class Profile extends React.Component {
     return (
       <div>
         <h1>{'Profile'}</h1>
-        <Header />
         <p>{'sub: ' + (sub || '')}</p>
         <img src={picture} alt="" />
         <p>

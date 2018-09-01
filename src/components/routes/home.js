@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Auth from '../../libs/auth'
 
-import Header from '../layouts/header'
-
 export class Home extends React.Component {
   static propTypes = {
     auth: PropTypes.instanceOf(Auth).isRequired
@@ -19,7 +17,6 @@ export class Home extends React.Component {
     return (
       <div>
         <h1>home</h1>
-        <Header />
       </div>
     )
   }

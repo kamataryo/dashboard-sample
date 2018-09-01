@@ -4,6 +4,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
  * Reducers
  */
 import authReducer from './reducers/auth'
+import menuReducer from './reducers/menu'
 
 /**
  * middlewares
@@ -17,7 +18,8 @@ const middlewares = []
  */
 const store = createStore(
   combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    menu: menuReducer
   }),
   applyMiddleware(...middlewares)
 )
