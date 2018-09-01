@@ -7,12 +7,10 @@ const base =
   window.location.host +
   (process.env.PUBLIC_URL || '')
 
-console.log(`base: ${base}`)
-
 export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'kamataryo-sandbox.auth0.com',
-    clientID: 'EyShL9IE4m0W29NmnCejWSF3I9r1VVdt',
+    clientID: 'FFVTXMqwdwHlVwwAJijY2tHIMieYv0qO',
     redirectUri: `${base}/callback`,
     audience: 'https://kamataryo-sandbox.auth0.com/userinfo',
     responseType: 'token id_token',
