@@ -1,5 +1,7 @@
 # TileCloud Dashboard
 
+This porject is in development.
+
 DEMO: https://tilecloud.github.io/dashboard
 
 ## development
@@ -13,6 +15,8 @@ $ yarn test # or npm test
 ```
 
 ## deploy
+
+Deploy
 
 ```shell
 $ npm run deploy

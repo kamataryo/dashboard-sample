@@ -34,6 +34,11 @@ export class Home extends React.Component {
       <div>
         <h1>home</h1>
         <p>
+          {
+            'This porject is in development. You can log in/sign up at sandbox environment and the users will be deleted witout notice.'
+          }
+        </p>
+        <p>
           {isLoggedIn
             ? 'You have successfully logged in!'
             : 'You have\'nt logged in yet :('}
