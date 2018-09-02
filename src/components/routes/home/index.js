@@ -40,23 +40,23 @@ export class Home extends React.Component {
         </p>
 
         {isLoggedIn ? (
-          <Link to={ '/logout' }>
+          <Link to={'/logout'}>
             <Button
-              variant={ 'contained' }
-              color={ 'primary' }
-              className={ classes.button }
+              variant={'contained'}
+              color={'primary'}
+              className={classes.button}
             >
               {'Logout'}
             </Button>
           </Link>
         ) : (
-          <Link to={ '/login' }>
+          <Link to={'/login'}>
             <Button
-              variant={ 'contained' }
-              color={ 'primary' }
-              className={ classes.button }
+              variant={'contained'}
+              color={'primary'}
+              className={classes.button}
             >
-              {'Login'}
+              {'Login or signup'}
             </Button>
           </Link>
         )}
