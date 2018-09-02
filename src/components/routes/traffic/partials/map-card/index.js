@@ -5,18 +5,12 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import traffic from 'src/../../samples/traffic'
-
-console.log(traffic)
+import { LineChart, XAxis, Tooltip, CartesianGrid, Line } from 'recharts'
 
 const styles = {
   card: {
     minWidth: 275,
     marginBottom: 20,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
   },
   title: {
     marginBottom: 16,
@@ -25,8 +19,14 @@ const styles = {
 }
 
 const SimpleCard = props => {
-  const { classes, map } = props
-  const data = traffic[map.id]
+  const { classes, showTraffic, showDisplayTimes, map } = props
+  const trafficData = [...traffic[map.id]]
+  trafficData.sort((a, b) => a.day - b.day)
+  const graphData = trafficData.map(data => ({
+    day: data.day,
+    displayTimes: data.displayTimes,
+    traffic: data.traffic,
+  }))
 
   return (
     <Card className={ classes.card }>
@@ -37,14 +37,43 @@ const SimpleCard = props => {
         <Typography className={ classes.title } color="textSecondary">
           {map.description || '(no description)'}
         </Typography>
-        <p>{JSON.stringify(data)}</p>
+        <LineChart
+          width={ 800 }
+          height={ 400 }
+          data={ graphData }
+          margin={ { top: 5, right: 20, left: 10, bottom: 5 } }
+        >
+          <XAxis dataKey="day" />
+          <Tooltip />
+          <CartesianGrid stroke="#f5f5f5" />
+          {showDisplayTimes && (
+            <Line
+              type="monotone"
+              dataKey="displayTimes"
+              stroke="#ff7300"
+              yAxisId={ 0 }
+            />
+          )}
+          {showTraffic && (
+            <Line
+              type="monotone"
+              dataKey="traffic"
+              stroke="#387908"
+              yAxisId={ 1 }
+            />
+          )}
+        </LineChart>
       </CardContent>
     </Card>
   )
 }
 
 SimpleCard.propTypes = {
+  // styleProps
   classes: PropTypes.object.isRequired,
+  // ownProps
+  showTraffic: PropTypes.bool.isRequired,
+  showDisplayTimes: PropTypes.bool.isRequired,
   map: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
