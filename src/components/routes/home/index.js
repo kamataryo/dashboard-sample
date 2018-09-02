@@ -22,6 +22,7 @@ export class Home extends React.Component {
     return (
       <div>
         <h1>home</h1>
+        {isLoggedIn && <p>{'You have successfully logged in!'}</p>}
         {isLoggedIn ? (
           <Link to={ '/logout' }>{'Logout'}</Link>
         ) : (
