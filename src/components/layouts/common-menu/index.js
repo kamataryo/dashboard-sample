@@ -92,7 +92,7 @@ class CommonMenu extends React.Component {
               noWrap
               style={ { flexGrow: 1 } }
             >
-              Dashboard
+              <Link to={ '/' }>Dashboard</Link>
             </Typography>
 
             {isLoggedIn && (
