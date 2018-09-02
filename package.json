@@ -1,5 +1,5 @@
 {
-  "name": "sandbox_auth0_react",
+  "name": "@tilecloud/tilecloud-editor",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -25,7 +25,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://kamataryo.github.io/sandbox_auth0_react",
+  "homepage": "https://tilecloud.github.io/tilecloud-editor",
   "devDependencies": {
     "eslint": "^5.5.0",
     "eslint-import-resolver-node": "^0.3.2",
