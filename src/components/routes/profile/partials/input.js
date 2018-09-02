@@ -29,14 +29,14 @@ export class DisplayName extends React.Component {
 
     return (
       <span>
-        <label htmlFor={label}>{label}</label>
+        <label htmlFor={ label }>{label}</label>
         <input
-          id={label}
-          type={'text'}
-          value={value}
-          onFocus={this.onFocus}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
+          id={ label }
+          type={ 'text' }
+          value={ value }
+          onFocus={ this.onFocus }
+          onChange={ this.onChange }
+          onBlur={ this.onBlur }
         />
       </span>
     )
@@ -46,11 +46,11 @@ export class DisplayName extends React.Component {
 DisplayName.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 }
 
 DisplayName.defaultProps = {
-  value: ''
+  value: '',
 }
 
 export default DisplayName

@@ -1,9 +1,13 @@
-import Auth from '../libs/auth'
+import Auth from 'src/libs/auth'
 
-const initialState = {
-  driver: new Auth()
+const initialAuthState = {
+  driver: new Auth(),
+  // recover on load
+  accessToken: localStorage.getItem('access_token'),
+  idToken: localStorage.getItem('id_token'),
+  expiresAt: localStorage.getItem('expires_at'),
 }
 
-const reducer = (state = initialState, action) => state
+const reducer = (state = initialAuthState, action) => state
 
 export default reducer

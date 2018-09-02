@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { createActions as createMenuActions } from '../../reducers/menu'
+import { createActions as createMenuActions } from 'src/reducers/menu'
 
 /**
  * map state to props
@@ -10,7 +10,7 @@ import { createActions as createMenuActions } from '../../reducers/menu'
 const mapStateToProps = (state, ownProps) => {
   return {
     auth: state.auth.driver,
-    isDrawerOpen: state.menu.isDrawerOpen
+    isDrawerOpen: state.menu.isDrawerOpen,
   }
 }
 
@@ -23,12 +23,12 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     openDrawer: () => dispatch(createMenuActions.openDrawer(true)),
-    closeDrawer: () => dispatch(createMenuActions.openDrawer(false))
+    closeDrawer: () => dispatch(createMenuActions.openDrawer(false)),
   }
 }
 
 export default Component =>
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
   )(Component)

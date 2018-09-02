@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Auth from '../../libs/auth'
+import Auth from 'src/libs/auth'
 
 export class Callback extends React.Component {
   /**
@@ -9,7 +9,7 @@ export class Callback extends React.Component {
    * @type {object}
    */
   static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired
+    auth: PropTypes.instanceOf(Auth).isRequired,
   }
 
   /**
@@ -17,7 +17,6 @@ export class Callback extends React.Component {
    * @return {void}
    */
   componentDidMount() {
-    console.log('processing callback')
     this.props.auth.handleAuthentication()
   }
 
@@ -36,9 +35,9 @@ export class Callback extends React.Component {
  * @param  {object} ownProps own props
  * @return {object}          state props
  */
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    auth: state.auth.driver
+    auth: state.auth.driver,
   }
 }
 export default connect(mapStateToProps)(Callback)

@@ -14,7 +14,7 @@ export default class Auth {
     redirectUri: `${base}/callback`,
     audience: 'https://kamataryo-sandbox.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid profile email'
+    scope: 'openid profile email',
   })
 
   login() {
@@ -53,7 +53,7 @@ export default class Auth {
     // External Auth0's login webpage keeps session. This clean it.
     this.auth0.logout({
       clientID: 'FFVTXMqwdwHlVwwAJijY2tHIMieYv0qO',
-      returnTo: `${base}/`
+      returnTo: `${base}/`,
     })
   }
 

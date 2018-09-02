@@ -19,9 +19,9 @@ const middlewares = []
 const store = createStore(
   combineReducers({
     auth: authReducer,
-    menu: menuReducer
+    menu: menuReducer,
   }),
-  applyMiddleware(...middlewares)
+  applyMiddleware(...middlewares),
 )
 
 export default store

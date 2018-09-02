@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Auth from '../../libs/auth'
+import Auth from 'src/libs/auth'
 
 export class AuthRoute extends React.Component {
   /**
@@ -9,7 +9,7 @@ export class AuthRoute extends React.Component {
    * @type {object}
    */
   static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired
+    auth: PropTypes.instanceOf(Auth).isRequired,
   }
 
   /**
@@ -18,7 +18,6 @@ export class AuthRoute extends React.Component {
    */
   componentDidMount() {
     const { auth } = this.props
-    console.log('login')
     auth.login()
   }
 
@@ -27,7 +26,6 @@ export class AuthRoute extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
-    console.log('auth')
     return null
   }
 }
@@ -38,9 +36,9 @@ export class AuthRoute extends React.Component {
  * @param  {object} ownProps own props
  * @return {object}          state props
  */
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    auth: state.auth.driver
+    auth: state.auth.driver,
   }
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import Auth from '../../../libs/auth'
+import Auth from 'src/libs/auth'
 import Input from './partials/input'
 
 import auth0 from 'auth0-js'
@@ -13,7 +13,7 @@ export class Profile extends React.Component {
    * @type {object}
    */
   static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired
+    auth: PropTypes.instanceOf(Auth).isRequired,
   }
 
   /**
@@ -40,13 +40,14 @@ export class Profile extends React.Component {
   createProfileUpdateHandler = key => value =>
     this.setState({
       ...this.state,
-      profile: { ...this.state.profile, [key]: value }
+      profile: { ...this.state.profile, [key]: value },
     })
 
   createUpdateMetadataHandler = kv => () => {
+    console.log('metadata: ' + JSON.stringify(kv))
     const auth0Manage = new auth0.Management({
       domain: 'kamataryo-sandbox.auth0.com',
-      token: localStorage.getItem('access_token')
+      token: localStorage.getItem('access_token'),
     })
     auth0Manage.patchUserMetadata(this.state.profile.sub, {}, console.log)
   }
@@ -58,29 +59,29 @@ export class Profile extends React.Component {
   render() {
     console.log(this.state.profile)
     const {
-      profile: { sub, nickname, name, picture }
+      profile: { sub, nickname, name, picture },
     } = this.state
     // const { auth } = this.props
     return (
       <div>
         <h1>{'Profile'}</h1>
         <p>{'sub: ' + (sub || '')}</p>
-        <img src={picture} alt="" />
+        <img src={ picture } alt="" />
         <p>
           <Input
-            label={'nickname'}
-            onChange={this.createProfileUpdateHandler('nickname')}
-            value={nickname}
+            label={ 'nickname' }
+            onChange={ this.createProfileUpdateHandler('nickname') }
+            value={ nickname }
           />
-          <button onClick={this.createUpdateMetadataHandler({ nickname })}>
+          <button onClick={ this.createUpdateMetadataHandler({ nickname }) }>
             {'send'}
           </button>
         </p>
         <p>
           <Input
-            label={'name'}
-            onChange={this.createProfileUpdateHandler('name')}
-            value={name}
+            label={ 'name' }
+            onChange={ this.createProfileUpdateHandler('name') }
+            value={ name }
           />
         </p>
       </div>
@@ -94,9 +95,9 @@ export class Profile extends React.Component {
  * @param  {object} ownProps own props
  * @return {object}          state props
  */
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    auth: state.auth.driver
+    auth: state.auth.driver,
   }
 }
 export default connect(mapStateToProps)(Profile)

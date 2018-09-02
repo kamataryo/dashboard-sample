@@ -6,7 +6,6 @@ body {
 
 html,
 body,
-div#root,
 div.height-filled {
   height: 100%;
 }

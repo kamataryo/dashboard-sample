@@ -1,19 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
-import Routes from './routes'
-import store from '../store'
+import Routes from 'src/components/routes/index.js'
+import store from 'src/store'
 
 // material-ui suitable font
 import 'typeface-roboto'
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Routes />
-      </Provider>
-    )
-  }
-}
+const App = () => (
+  <Provider store={ store }>
+    <Routes />
+  </Provider>
+)
 
 export default App

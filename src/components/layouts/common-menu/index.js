@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import style from './style'
 import connect from './connect'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
+
 import classNames from 'classnames'
 
 import Drawer from '@material-ui/core/Drawer'
@@ -15,41 +16,65 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { mailFolderListItems, otherMailFolderListItems } from './tiles'
+import { mailFolderListItems, systemOperationMenuItems } from './tiles'
 
 class CommonMenu extends React.Component {
+  /**
+   * propTypes
+   * @type {object}
+   */
+  static propTypes = {
+    // own Props
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
+    ]).isRequired,
+    // styleProps
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+    // stateProps
+    isDrawerOpen: PropTypes.bool.isRequired,
+    // dispatchProps
+    openDrawer: PropTypes.func.isRequired,
+    closeDrawer: PropTypes.func.isRequired,
+  }
+
   /**
    * render
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
     const {
+      // ownProps
+      children,
+      // styleProps
       classes,
       theme,
+      // stateProps
       isDrawerOpen,
+      // dispatchProps
       openDrawer,
       closeDrawer,
-      children
     } = this.props
 
     return (
-      <div className={classes.root}>
+      <div className={ classes.root }>
         <AppBar
           position="absolute"
-          className={classNames(
+          className={ classNames(
             classes.appBar,
-            isDrawerOpen && classes.appBarShift
-          )}
+            isDrawerOpen && classes.appBarShift,
+          ) }
         >
-          <Toolbar disableGutters={!isDrawerOpen}>
+          <Toolbar disableGutters={ !isDrawerOpen }>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
-              onClick={openDrawer}
-              className={classNames(
+              onClick={ openDrawer }
+              className={ classNames(
                 classes.menuButton,
-                isDrawerOpen && classes.hide
-              )}
+                isDrawerOpen && classes.hide,
+              ) }
             >
               <MenuIcon />
             </IconButton>
@@ -60,16 +85,16 @@ class CommonMenu extends React.Component {
         </AppBar>
         <Drawer
           variant="permanent"
-          classes={{
+          classes={ {
             paper: classNames(
               classes.drawerPaper,
-              !isDrawerOpen && classes.drawerPaperClose
-            )
-          }}
-          open={isDrawerOpen}
+              !isDrawerOpen && classes.drawerPaperClose,
+            ),
+          } }
+          open={ isDrawerOpen }
         >
-          <div className={classes.toolbar}>
-            <IconButton onClick={closeDrawer}>
+          <div className={ classes.toolbar }>
+            <IconButton onClick={ closeDrawer }>
               {theme.direction === 'rtl' ? (
                 <ChevronRightIcon />
               ) : (
@@ -80,10 +105,10 @@ class CommonMenu extends React.Component {
           <Divider />
           <List>{mailFolderListItems}</List>
           <Divider />
-          <List>{otherMailFolderListItems}</List>
+          <List>{systemOperationMenuItems}</List>
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
+        <main className={ classes.content }>
+          <div className={ classes.toolbar } />
           {children}
         </main>
       </div>
@@ -91,9 +116,4 @@ class CommonMenu extends React.Component {
   }
 }
 
-CommonMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-}
-
-export default connect(style(CommonMenu))
+export default withRouter(connect(style(CommonMenu)))

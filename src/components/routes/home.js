@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Auth from '../../libs/auth'
+import Auth from 'src/libs/auth'
 
 export class Home extends React.Component {
   static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired
+    auth: PropTypes.instanceOf(Auth).isRequired,
   }
 
   /**
@@ -28,9 +28,9 @@ export class Home extends React.Component {
  * @param  {object} ownProps own props
  * @return {object}          state props
  */
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    auth: state.auth.driver
+    auth: state.auth.driver,
   }
 }
 export default connect(mapStateToProps)(Home)
