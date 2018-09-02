@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import maps from 'src/../../samples/maps'
+import maps from 'src/samples/maps'
 import Link from 'src/components/commons/refined-link'
 
 import List from '@material-ui/core/List'
