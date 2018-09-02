@@ -4,6 +4,7 @@ import Link from 'src/components/commons/refined-link'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
 
 const styles = theme => ({
   button: {
@@ -33,11 +34,13 @@ export class Home extends React.Component {
     return (
       <div>
         <h1>home</h1>
-        <p>
-          {
-            'This porject is in development. You can log in/sign up at sandbox environment and the users will be deleted witout notice.'
-          }
-        </p>
+        <Card>
+          <p style={{ margin: 10, padding: 5 }}>
+            {
+              'ATTENTION: This porject is in development. You can log in/sign up for a sandbox environment and the users will be deleted witout notice.'
+            }
+          </p>
+        </Card>
         <p>
           {isLoggedIn
             ? 'You have successfully logged in!'
