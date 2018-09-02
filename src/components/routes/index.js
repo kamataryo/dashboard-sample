@@ -15,6 +15,7 @@ import Callback from './callback'
 import Logout from './logout'
 import Traffic from './traffic'
 import Maps from './maps'
+import Map from './map'
 import Groups from './groups'
 import Information from './information'
 
@@ -29,6 +30,7 @@ const routeConfig = [
   // menu
   { path: '/traffic', exact: true, Content: Traffic },
   { path: '/maps', exact: true, Content: Maps },
+  { path: '/maps/:mapId', exact: true, Content: Map },
   { path: '/groups', exact: true, Content: Groups },
   { path: '/information', exact: true, Content: Information },
 ]
@@ -42,7 +44,7 @@ export const Routes = () => {
             key={ `routing-${path}` }
             path={ `${process.env.PUBLIC_URL}${path}` }
             exact={ exact }
-            render={ () => <Content /> }
+            render={ ({ match: { params } }) => <Content routeParams={ params } /> }
           />
         ))}
       </CommonMenu>
