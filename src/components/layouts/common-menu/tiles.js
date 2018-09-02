@@ -10,8 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/Home'
 import ChartIcon from '@material-ui/icons/InsertChartOutlined'
 import MapIcon from '@material-ui/icons/Layers'
+import UserIcon from '@material-ui/icons/Person'
 import GroupIcon from '@material-ui/icons/Group'
-
 import InfoIcon from '@material-ui/icons/Info'
 
 export const mailFolderListItems = isLoggedIn => (
@@ -43,6 +43,17 @@ export const mailFolderListItems = isLoggedIn => (
             <MapIcon />
           </ListItemIcon>
           <ListItemText primary="Maps" />
+        </ListItem>
+      </Link>
+    )}
+
+    {isLoggedIn && (
+      <Link to="/profile">
+        <ListItem button>
+          <ListItemIcon>
+            <UserIcon />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
         </ListItem>
       </Link>
     )}

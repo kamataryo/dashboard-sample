@@ -37,16 +37,31 @@ const SimpleCard = props => {
     traffic: data.traffic,
   }))
 
+  const totalDisplayTimes = graphData.reduce(
+    (prev, { displayTimes }) => prev + displayTimes,
+    0,
+  )
+
+  const totalTraffic = Math.round(
+    graphData.reduce((prev, { traffic }) => prev + traffic, 0) / 1000000,
+  )
+
   return (
     <Card className={ classes.card }>
       <CardContent>
         <Typography variant="headline" component="h2">
           {map.name}
         </Typography>
-        <Typography className={ classes.title } color="textSecondary">
+
+        <Typography
+          color="textSecondary"
+          component="p"
+          style={ { marginBottom: 10 } }
+        >
           {map.description || '(no description)'}
         </Typography>
 
+        <Typography component="p">{`Total: ${totalTraffic} MB (${totalDisplayTimes} Times)`}</Typography>
         <LineChart
           width={ 800 }
           height={ 300 }
@@ -80,6 +95,7 @@ const SimpleCard = props => {
             dataKey={ 'displayTimes' }
             stroke={ '#8884d8' }
             strokeWidth={ showDisplayTimes ? 1 : 0 }
+            dot={ showDisplayTimes }
           />
           <Line
             yAxisId={ 'right' }
@@ -87,6 +103,7 @@ const SimpleCard = props => {
             dataKey={ 'traffic' }
             stroke={ '#82ca9d' }
             strokeWidth={ showTraffic ? 1 : 0 }
+            dot={ showTraffic }
           />
         </LineChart>
       </CardContent>

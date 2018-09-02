@@ -38,7 +38,7 @@ export class Traffic extends React.Component {
     const { maps } = this.props
 
     return (
-      <div className="height-filled">
+      <div>
         <h1>Traffic</h1>
         <form>
           <Checkbox

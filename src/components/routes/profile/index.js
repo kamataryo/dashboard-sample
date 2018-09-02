@@ -4,8 +4,7 @@ import PropTypes from 'prop-types'
 import { createActions as createProfileAction } from 'src/reducers/profile'
 import Input from './partials/input'
 import Button from '@material-ui/core/Button'
-
-import auth0 from 'auth0-js'
+import { auth } from 'src/middlewares/auth-middleware'
 
 export class Profile extends React.Component {
   /**
@@ -13,6 +12,8 @@ export class Profile extends React.Component {
    * @type {object}
    */
   static propTypes = {
+    // stateProps
+    accessToken: PropTypes.string.isRequired,
     profile: PropTypes.shape({
       sub: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
@@ -39,12 +40,28 @@ export class Profile extends React.Component {
 
   // TODO: request fails
   createUpdateMetadataHandler = kv => () => {
-    console.log('metadata: ' + JSON.stringify(kv))
-    const auth0Manage = new auth0.Management({
-      domain: 'kamataryo-sandbox.auth0.com',
-      token: localStorage.getItem('access_token'),
-    })
-    auth0Manage.patchUserMetadata(this.props.profile.sub, {}, console.log)
+    auth.auth0.checkSession(
+      {
+        audience: 'https://kamataryo-sandbox.auth0.com/api/v2/',
+        scope: 'openid profile',
+      },
+      (err, result) => console.log({ err, result }),
+    )
+
+    // const { accessToken } = this.props
+    // console.log('metadata: ' + JSON.stringify(kv))
+    //
+    // const auth0Manage = new auth0.Management({
+    //   domain: 'kamataryo-sandbox.auth0.com',
+    //   token: accessToken,
+    // })
+    // auth0Manage.getUser(this.props.profile.sub, console.log)
+
+    // patchUserMetadata(
+    //   this.props.profile.sub,
+    //   kv,
+    //   console.log,
+    // )
   }
 
   /**
@@ -110,6 +127,7 @@ export class Profile extends React.Component {
  */
 const mapStateToProps = state => {
   return {
+    accessToken: state.auth.accessToken,
     profile: state.profile,
   }
 }

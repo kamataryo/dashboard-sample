@@ -126,6 +126,7 @@ class CommonMenu extends React.Component {
           <Divider />
           <List>{systemOperationMenuItems}</List>
         </Drawer>
+
         <main className={ classes.content }>
           <div className={ classes.toolbar } />
           {children}
