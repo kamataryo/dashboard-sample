@@ -80,8 +80,7 @@ export class Profile extends React.Component {
         <p>{'sub: ' + (sub || '')}</p>
 
         <p>
-          <img src={ picture } alt="" />
-          <a href={ 'https://gravatar.com/' } target={ '_blank' } />
+          <img src={ picture } alt={ name } />
         </p>
 
         <div style={ { display: 'flex' } }>

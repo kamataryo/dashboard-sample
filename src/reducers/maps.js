@@ -1,4 +1,3 @@
-import update from 'immutability-helper'
 import sampleMaps from 'src/samples/maps'
 import style from 'src/samples/style.json'
 

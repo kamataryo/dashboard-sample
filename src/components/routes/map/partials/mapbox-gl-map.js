@@ -30,6 +30,7 @@ export class MapboxGLMap extends React.Component {
    */
   componentDidMount() {
     const { style } = this.props
+
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style,
