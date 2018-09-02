@@ -12,6 +12,8 @@ const mapStateToProps = state => {
   return {
     isDrawerOpen: state.menu.isDrawerOpen,
     isLoggedIn: new Date().getTime() < expiresAt,
+    name: state.profile.name,
+    picture: state.profile.picture,
   }
 }
 

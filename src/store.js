@@ -7,6 +7,7 @@ import authMiddleware from 'src/middlewares/auth-middleware'
 import authReducer from './reducers/auth'
 import menuReducer from './reducers/menu'
 import mapsReducer from './reducers/maps'
+import profileReducer from './reducers/profile'
 
 /**
  * middlewares
@@ -23,6 +24,7 @@ const store = createStore(
     auth: authReducer,
     menu: menuReducer,
     maps: mapsReducer,
+    profile: profileReducer,
   }),
   applyMiddleware(...middlewares),
 )

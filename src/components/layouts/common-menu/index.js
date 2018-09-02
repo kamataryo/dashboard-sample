@@ -6,6 +6,8 @@ import { withRouter } from 'react-router'
 
 import classNames from 'classnames'
 
+import Link from 'src/components/commons/refined-link'
+import Avatar from '@material-ui/core/Avatar'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -35,6 +37,8 @@ class CommonMenu extends React.Component {
     // stateProps
     isLoggedIn: PropTypes.bool.isRequired,
     isDrawerOpen: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+    picture: PropTypes.string.isRequired,
     // dispatchProps
     openDrawer: PropTypes.func.isRequired,
     closeDrawer: PropTypes.func.isRequired,
@@ -52,6 +56,8 @@ class CommonMenu extends React.Component {
       classes,
       theme,
       // stateProps
+      name,
+      picture,
       isLoggedIn,
       isDrawerOpen,
       // dispatchProps
@@ -80,9 +86,20 @@ class CommonMenu extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
+            <Typography
+              variant="title"
+              color="inherit"
+              noWrap
+              style={ { flexGrow: 1 } }
+            >
               Dashboard
             </Typography>
+
+            {isLoggedIn && (
+              <Link to={ '/profile' }>
+                <Avatar alt={ name } src={ picture } style={ { margin: 10 } } />
+              </Link>
+            )}
           </Toolbar>
         </AppBar>
         <Drawer

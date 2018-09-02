@@ -21,10 +21,10 @@ export default class Auth {
     this.auth0.authorize()
   }
 
-  handleAuthentication(callback) {
+  handleAuthentication(callbacks) {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult, callback)
+        this.setSession(authResult, callbacks)
         history.replace(`${process.env.PUBLIC_URL}/`)
       } else if (err) {
         console.error(err)
@@ -33,13 +33,14 @@ export default class Auth {
     })
   }
 
-  setSession(authResult, callback) {
+  setSession(authResult, callbacks) {
     const expiresAt =
       JSON.stringify(authResult.expiresIn * 1000) + new Date().getTime()
     localStorage.setItem('access_token', authResult.accessToken)
     localStorage.setItem('id_token', authResult.idToken)
     localStorage.setItem('expires_at', expiresAt)
-    callback({
+
+    callbacks.dispatchSetTokens({
       accessToken: authResult.accessToken,
       idToken: authResult.idToken,
       expiresAt: expiresAt,
@@ -59,27 +60,10 @@ export default class Auth {
     })
   }
 
-  isAuthenticated() {
-    // Check whether the current time is past the
-    // Access Token's expiry time
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'))
-    return new Date().getTime() < expiresAt
-  }
-
-  getAccessToken() {
-    const accessToken = localStorage.getItem('access_token')
-    if (!accessToken) {
-      throw new Error('No Access Token found')
-    }
-    return accessToken
-  }
-
-  getProfile() {
-    const accessToken = this.getAccessToken()
+  getProfile(accessToken) {
     return new Promise((resolve, reject) => {
       this.auth0.client.userInfo(accessToken, (err, profile) => {
         if (profile) {
-          this.userProfile = profile
           resolve(profile)
         } else {
           reject(err)

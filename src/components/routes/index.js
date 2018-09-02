@@ -14,6 +14,8 @@ import Login from './login'
 import Callback from './callback'
 import Logout from './logout'
 import Traffic from './traffic'
+import Maps from './maps'
+import Groups from './groups'
 import Information from './information'
 
 const routeConfig = [
@@ -26,6 +28,8 @@ const routeConfig = [
 
   // menu
   { path: '/traffic', exact: true, Content: Traffic },
+  { path: '/maps', exact: true, Content: Maps },
+  { path: '/groups', exact: true, Content: Groups },
   { path: '/information', exact: true, Content: Information },
 ]
 
