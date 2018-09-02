@@ -1,20 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types'
+import { createActions as createProfileAction } from 'src/reducers/profile'
 import Input from './partials/input'
+import Button from '@material-ui/core/Button'
 
 import auth0 from 'auth0-js'
 
 export class Profile extends React.Component {
   /**
-   * constructor
-   * @param  {object} props React props.
-   * @return {void}
+   * propTypes
+   * @type {object}
    */
-  constructor(props) {
-    super(props)
-    this.state = { profile: {} }
+  static propTypes = {
+    profile: PropTypes.shape({
+      sub: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      nickname: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired,
+    }).isRequired,
+    // dispatchProps
+    updateProfile: PropTypes.func.isRequired,
   }
 
   /**
@@ -29,18 +35,16 @@ export class Profile extends React.Component {
   }
 
   createProfileUpdateHandler = key => value =>
-    this.setState({
-      ...this.state,
-      profile: { ...this.state.profile, [key]: value },
-    })
+    this.props.updateProfile({ [key]: value })
 
+  // TODO: request fails
   createUpdateMetadataHandler = kv => () => {
     console.log('metadata: ' + JSON.stringify(kv))
     const auth0Manage = new auth0.Management({
       domain: 'kamataryo-sandbox.auth0.com',
       token: localStorage.getItem('access_token'),
     })
-    auth0Manage.patchUserMetadata(this.state.profile.sub, {}, console.log)
+    auth0Manage.patchUserMetadata(this.props.profile.sub, {}, console.log)
   }
 
   /**
@@ -48,33 +52,51 @@ export class Profile extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
-    console.log(this.state.profile)
     const {
       profile: { sub, nickname, name, picture },
-    } = this.state
+    } = this.props
     // const { auth } = this.props
     return (
       <div>
         <h1>{'Profile'}</h1>
+
         <p>{'sub: ' + (sub || '')}</p>
-        <img src={ picture } alt="" />
+
         <p>
+          <img src={ picture } alt="" />
+          <a href={ 'https://gravatar.com/' } target={ '_blank' } />
+        </p>
+
+        <div style={ { display: 'flex' } }>
           <Input
             label={ 'nickname' }
             onChange={ this.createProfileUpdateHandler('nickname') }
             value={ nickname }
+            style={ { flexGrow: 1 } }
           />
-          <button onClick={ this.createUpdateMetadataHandler({ nickname }) }>
+          <Button
+            variant={ 'text' }
+            color={ 'default' }
+            onClick={ this.createUpdateMetadataHandler({ nickname }) }
+          >
             {'send'}
-          </button>
-        </p>
-        <p>
+          </Button>
+        </div>
+        <div style={ { display: 'flex' } }>
           <Input
             label={ 'name' }
             onChange={ this.createProfileUpdateHandler('name') }
             value={ name }
-          />
-        </p>
+            style={ { flexGrow: 1 } }
+          />{' '}
+          <Button
+            variant={ 'text' }
+            color={ 'default' }
+            onClick={ this.createUpdateMetadataHandler({ name }) }
+          >
+            {'send'}
+          </Button>
+        </div>
       </div>
     )
   }
@@ -88,7 +110,24 @@ export class Profile extends React.Component {
  */
 const mapStateToProps = state => {
   return {
-    auth: state.auth.driver,
+    profile: state.profile,
   }
 }
-export default connect(mapStateToProps)(Profile)
+
+/**
+ * map dispatch to props
+ * @param  {function} dispatch dispatcher
+ * @param  {object}   ownProps own props
+ * @return {object}            dispatch props
+ */
+const mapDispatchToProps = dispatch => {
+  return {
+    updateProfile: profile =>
+      dispatch(createProfileAction.updateProfile(profile)),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Profile)

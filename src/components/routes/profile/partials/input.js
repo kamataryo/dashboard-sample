@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import TextField from '@material-ui/core/TextField'
 
 export class DisplayName extends React.Component {
   /**
@@ -28,17 +29,15 @@ export class DisplayName extends React.Component {
     const { label } = this.props
 
     return (
-      <span>
-        <label htmlFor={ label }>{label}</label>
-        <input
-          id={ label }
-          type={ 'text' }
-          value={ value }
-          onFocus={ this.onFocus }
-          onChange={ this.onChange }
-          onBlur={ this.onBlur }
-        />
-      </span>
+      <TextField
+        id={ label }
+        label={ label }
+        value={ value }
+        onFocus={ this.onFocus }
+        onChange={ this.onChange }
+        onBlur={ this.onBlur }
+        fullWidth
+      />
     )
   }
 }
