@@ -50,7 +50,11 @@ export class MapboxGLMap extends React.Component {
    * @return {void}
    */
   UNSAFE_componentWillReceiveProps(nextProps) {
-    this.state.map && this.state.map.setStyle(nextProps.style)
+    if (this.state.map && this.props.style !== nextProps.style) {
+      console.log(1)
+      this.state.map.setStyle(nextProps.style)
+      console.log(2)
+    }
   }
 
   /**
