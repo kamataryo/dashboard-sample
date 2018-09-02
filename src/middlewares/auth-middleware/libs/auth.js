@@ -21,27 +21,29 @@ export default class Auth {
     this.auth0.authorize()
   }
 
-  handleAuthentication() {
-    console.log(window.location.hash)
+  handleAuthentication(callback) {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult)
+        this.setSession(authResult, callback)
         history.replace(`${process.env.PUBLIC_URL}/`)
       } else if (err) {
-        history.replace(`${process.env.PUBLIC_URL}/`)
         console.error(err)
+        history.replace(`${process.env.PUBLIC_URL}/`)
       }
     })
   }
 
-  setSession(authResult) {
+  setSession(authResult, callback) {
     const expiresAt =
       JSON.stringify(authResult.expiresIn * 1000) + new Date().getTime()
     localStorage.setItem('access_token', authResult.accessToken)
     localStorage.setItem('id_token', authResult.idToken)
     localStorage.setItem('expires_at', expiresAt)
-    // navigate to the home route
-    history.replace(`${process.env.PUBLIC_URL}/`)
+    callback({
+      accessToken: authResult.accessToken,
+      idToken: authResult.idToken,
+      expiresAt: expiresAt,
+    })
   }
 
   logout() {

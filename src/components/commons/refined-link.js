@@ -9,6 +9,7 @@ export const RefinedLink = props => {
     style: {
       ...props.style,
       textDecoration: 'none',
+      color: 'inherit',
     },
   }
   return <Link { ...innerProps }>{props.children}</Link>

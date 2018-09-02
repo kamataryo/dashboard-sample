@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Checkbox from '@material-ui/core/Checkbox'
 import MapCard from './partials/map-card'
 import { connect } from 'react-redux'
 
@@ -37,20 +38,20 @@ export class Traffic extends React.Component {
     const { maps } = this.props
 
     return (
-      <div>
+      <div className="height-filled">
         <h1>Traffic</h1>
         <form>
-          <input
+          <Checkbox
             id={ 'toggle-traffic' }
-            type={ 'checkbox' }
             checked={ showTraffic }
+            color={ 'default' }
             onChange={ this.createToggleHandler('showTraffic') }
           />
           <label htmlFor="toggle-traffic">{'Traffic'}</label>
-          <input
+          <Checkbox
             id={ 'toggle-display-times' }
-            type={ 'checkbox' }
             checked={ showDisplayTimes }
+            color={ 'default' }
             onChange={ this.createToggleHandler('showDisplayTimes') }
           />
           <label htmlFor="toggle-display-times">{'Display Times'}</label>

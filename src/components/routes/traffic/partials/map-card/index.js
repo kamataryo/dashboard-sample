@@ -5,7 +5,15 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import traffic from 'src/../../samples/traffic'
-import { LineChart, XAxis, Tooltip, CartesianGrid, Line } from 'recharts'
+import {
+  LineChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Line,
+  Label,
+} from 'recharts'
 
 const styles = {
   card: {
@@ -22,6 +30,7 @@ const SimpleCard = props => {
   const { classes, showTraffic, showDisplayTimes, map } = props
   const trafficData = [...traffic[map.id]]
   trafficData.sort((a, b) => a.day - b.day)
+
   const graphData = trafficData.map(data => ({
     day: data.day,
     displayTimes: data.displayTimes,
@@ -37,31 +46,48 @@ const SimpleCard = props => {
         <Typography className={ classes.title } color="textSecondary">
           {map.description || '(no description)'}
         </Typography>
+
         <LineChart
           width={ 800 }
-          height={ 400 }
+          height={ 300 }
           data={ graphData }
-          margin={ { top: 5, right: 20, left: 10, bottom: 5 } }
+          margin={ { top: 10, right: 30, left: 30, bottom: 10 } }
         >
-          <XAxis dataKey="day" />
-          <Tooltip />
-          <CartesianGrid stroke="#f5f5f5" />
-          {showDisplayTimes && (
-            <Line
-              type="monotone"
-              dataKey="displayTimes"
-              stroke="#ff7300"
-              yAxisId={ 0 }
-            />
-          )}
-          {showTraffic && (
-            <Line
-              type="monotone"
-              dataKey="traffic"
-              stroke="#387908"
-              yAxisId={ 1 }
-            />
-          )}
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis yAxisId={ 'left' }>
+            <Label angle={ 270 } position="left" style={ { textAnchor: 'middle' } }>
+              {'Times [n]'}
+            </Label>
+          </YAxis>
+          <YAxis
+            yAxisId={ 'right' }
+            orientation={ 'right' }
+            tickFormatter={ tick => tick / 1000000 }
+          >
+            <Label angle={ 90 } position="right" style={ { textAnchor: 'middle' } }>
+              {'Traffic [MB]'}
+            </Label>
+          </YAxis>
+          <Tooltip
+            formatter={ (value, name) =>
+              name === 'traffic' ? value / 1000000 + ' MB' : value
+            }
+          />
+          <Line
+            yAxisId={ 'left' }
+            type={ 'monotone' }
+            dataKey={ 'displayTimes' }
+            stroke={ '#8884d8' }
+            strokeWidth={ showDisplayTimes ? 1 : 0 }
+          />
+          <Line
+            yAxisId={ 'right' }
+            type={ 'monotone' }
+            dataKey={ 'traffic' }
+            stroke={ '#82ca9d' }
+            strokeWidth={ showTraffic ? 1 : 0 }
+          />
         </LineChart>
       </CardContent>
     </Card>

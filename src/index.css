@@ -7,5 +7,6 @@ body {
 html,
 body,
 div.height-filled {
+  overflow-y: scroll;
   height: 100%;
 }

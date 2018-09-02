@@ -25,7 +25,7 @@ export class LogoutRoute extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
-    return 'Logging Out...'
+    return 'Logging out...'
   }
 }
 

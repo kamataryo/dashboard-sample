@@ -25,7 +25,7 @@ export class LoginRoute extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
-    return 'Logging In...'
+    return 'Logging in...'
   }
 }
 
