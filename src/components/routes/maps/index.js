@@ -25,7 +25,7 @@ export const Maps = props => {
   return (
     <div>
       <h1>{'Maps'}</h1>
-      <p>{'Configure maps here.'}</p>
+      <p>{'Configure your maps here.'}</p>
       {maps.map(map => (
         <div key={ `each-map-link-to-${map.id}` } className={ classes.paper }>
           <List dense={ false }>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import maps from 'src/../../samples/maps'
 import Typography from '@material-ui/core/Typography'
 import MapboxGLMap from './partials/mapbox-gl-map'
+import UrlList from './partials/url-list'
 
 export class Map extends React.Component {
   /**
@@ -32,6 +33,8 @@ export class Map extends React.Component {
         </Typography>
 
         <MapboxGLMap style={ style } />
+
+        <UrlList />
       </div>
     )
   }
