@@ -1,4 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
+import authMiddleware from 'src/middlewares/auth-middleware'
 
 /**
  * Reducers
@@ -10,7 +11,7 @@ import menuReducer from './reducers/menu'
  * middlewares
  * @type {Array<function>}
  */
-const middlewares = []
+const middlewares = [authMiddleware]
 
 /**
  * store

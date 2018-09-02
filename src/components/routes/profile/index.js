@@ -1,21 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
-import Auth from 'src/libs/auth'
 import Input from './partials/input'
 
 import auth0 from 'auth0-js'
 
 export class Profile extends React.Component {
-  /**
-   * propTypes
-   * @type {object}
-   */
-  static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired,
-  }
-
   /**
    * constructor
    * @param  {object} props React props.
@@ -31,10 +22,10 @@ export class Profile extends React.Component {
    * @return {void}
    */
   componentDidMount() {
-    this.props.auth
-      .getProfile()
-      .then(profile => this.setState({ ...this.state, profile }))
-      .catch(console.error)
+    // this.props.auth
+    //   .getProfile()
+    //   .then(profile => this.setState({ ...this.state, profile }))
+    //   .catch(console.error)
   }
 
   createProfileUpdateHandler = key => value =>

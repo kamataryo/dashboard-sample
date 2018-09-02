@@ -1,11 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Auth from 'src/libs/auth'
+import Link from 'src/components/commons/refined-link'
+import { connect } from 'react-redux'
 
 export class Home extends React.Component {
+  /**
+   * propTypes
+   * @type {object}
+   */
   static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
   }
 
   /**
@@ -13,10 +17,16 @@ export class Home extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
-    // const { auth } = this.props
+    const { isLoggedIn } = this.props
+
     return (
       <div>
         <h1>home</h1>
+        {isLoggedIn ? (
+          <Link to={ '/logout' }>{'Logout'}</Link>
+        ) : (
+          <Link to={ '/login' }>{'Login'}</Link>
+        )}
       </div>
     )
   }
@@ -29,8 +39,10 @@ export class Home extends React.Component {
  * @return {object}          state props
  */
 const mapStateToProps = state => {
+  const { expiresAt } = state.auth
   return {
-    auth: state.auth.driver,
+    isLoggedIn: new Date().getTime() < expiresAt,
   }
 }
+
 export default connect(mapStateToProps)(Home)

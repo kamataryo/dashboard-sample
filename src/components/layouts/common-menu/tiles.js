@@ -14,7 +14,7 @@ import GroupIcon from '@material-ui/icons/Group'
 
 import InfoIcon from '@material-ui/icons/Info'
 
-export const mailFolderListItems = (
+export const mailFolderListItems = isLoggedIn => (
   <div>
     <Link to="/">
       <ListItem button>
@@ -25,32 +25,38 @@ export const mailFolderListItems = (
       </ListItem>
     </Link>
 
-    <Link to="/traffic">
-      <ListItem button>
-        <ListItemIcon>
-          <ChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Trafic" />
-      </ListItem>
-    </Link>
+    {isLoggedIn && (
+      <Link to="/traffic">
+        <ListItem button>
+          <ListItemIcon>
+            <ChartIcon />
+          </ListItemIcon>
+          <ListItemText primary="Trafic" />
+        </ListItem>
+      </Link>
+    )}
 
-    <Link to="/maps">
-      <ListItem button>
-        <ListItemIcon>
-          <MapIcon />
-        </ListItemIcon>
-        <ListItemText primary="Maps" />
-      </ListItem>
-    </Link>
+    {isLoggedIn && (
+      <Link to="/maps">
+        <ListItem button>
+          <ListItemIcon>
+            <MapIcon />
+          </ListItemIcon>
+          <ListItemText primary="Maps" />
+        </ListItem>
+      </Link>
+    )}
 
-    <Link to="/groups">
-      <ListItem button>
-        <ListItemIcon>
-          <GroupIcon />
-        </ListItemIcon>
-        <ListItemText primary="Groups" />
-      </ListItem>
-    </Link>
+    {isLoggedIn && (
+      <Link to="/groups">
+        <ListItem button>
+          <ListItemIcon>
+            <GroupIcon />
+          </ListItemIcon>
+          <ListItemText primary="Groups" />
+        </ListItem>
+      </Link>
+    )}
   </div>
 )
 

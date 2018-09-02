@@ -33,6 +33,7 @@ class CommonMenu extends React.Component {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     // stateProps
+    isLoggedIn: PropTypes.bool.isRequired,
     isDrawerOpen: PropTypes.bool.isRequired,
     // dispatchProps
     openDrawer: PropTypes.func.isRequired,
@@ -51,6 +52,7 @@ class CommonMenu extends React.Component {
       classes,
       theme,
       // stateProps
+      isLoggedIn,
       isDrawerOpen,
       // dispatchProps
       openDrawer,
@@ -103,7 +105,7 @@ class CommonMenu extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List>{mailFolderListItems}</List>
+          <List>{mailFolderListItems(isLoggedIn)}</List>
           <Divider />
           <List>{systemOperationMenuItems}</List>
         </Drawer>

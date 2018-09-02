@@ -1,5 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import System from 'src/components/system'
 import Routes from 'src/components/routes/index.js'
 import store from 'src/store'
 
@@ -8,7 +9,10 @@ import 'typeface-roboto'
 
 const App = () => (
   <Provider store={ store }>
-    <Routes />
+    <div className={ 'height-filled' }>
+      <System.Auth />
+      <Routes />
+    </div>
   </Provider>
 )
 

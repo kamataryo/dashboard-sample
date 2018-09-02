@@ -7,10 +7,11 @@ import { createActions as createMenuActions } from 'src/reducers/menu'
  * @param  {object} ownProps own props
  * @return {object}          state props
  */
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
+  const { expiresAt } = state.auth
   return {
-    auth: state.auth.driver,
     isDrawerOpen: state.menu.isDrawerOpen,
+    isLoggedIn: new Date().getTime() < expiresAt,
   }
 }
 
@@ -20,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
  * @param  {object}   ownProps own props
  * @return {object}            dispatch props
  */
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     openDrawer: () => dispatch(createMenuActions.openDrawer(true)),
     closeDrawer: () => dispatch(createMenuActions.openDrawer(false)),
