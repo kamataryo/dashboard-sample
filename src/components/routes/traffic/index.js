@@ -30,6 +30,7 @@ export class Traffic extends React.Component {
     this.state = {
       showTraffic: true,
       showDisplayTimes: true,
+      isCumulative: false,
       selectedYear: parseInt(props.routeParams.year, 10),
       selectedMonth: parseInt(props.routeParams.month, 10),
     }
@@ -46,6 +47,7 @@ export class Traffic extends React.Component {
     const {
       showTraffic,
       showDisplayTimes,
+      isCumulative,
       selectedYear,
       selectedMonth,
     } = this.state
@@ -121,6 +123,16 @@ export class Traffic extends React.Component {
             />
             <label htmlFor="toggle-display-times">{'Display Times'}</label>
           </div>
+
+          <div>
+            <Checkbox
+              id={'toggle-cumulative'}
+              checked={isCumulative}
+              color={'default'}
+              onChange={this.createToggleHandler('isCumulative')}
+            />
+            <label htmlFor="toggle-cumulative">{'Cumulative'}</label>
+          </div>
         </div>
         {maps.map(map => (
           <MapCard
@@ -130,6 +142,7 @@ export class Traffic extends React.Component {
             month={month}
             showTraffic={showTraffic}
             showDisplayTimes={showDisplayTimes}
+            isCumulative={isCumulative}
           />
         ))}
       </div>

@@ -21,17 +21,17 @@ import Groups from './groups'
 import Information from './information'
 
 const routeConfig = [
-  { path: '/', exact: true, Content: Home },
-  { path: '/profile', exact: true, Content: Profile },
   // for login/logout
   { path: '/login', exact: true, Content: Login },
   { path: '/callback', exact: true, Content: Callback },
   { path: '/logout', exact: true, Content: Logout },
 
   // menu
+  { path: '/', exact: true, Content: Home },
   { path: '/traffic/:year/:month', exact: true, Content: Traffic },
   { path: '/maps', exact: true, Content: Maps },
   { path: '/maps/:mapId', exact: true, Content: Map },
+  { path: '/profile', exact: true, Content: Profile },
   { path: '/groups', exact: true, Content: Groups },
   { path: '/groups/:groupId', exact: true, Content: Group },
   { path: '/information', exact: true, Content: Information },

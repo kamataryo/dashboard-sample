@@ -70,27 +70,44 @@ export class SimpleCard extends React.Component {
       classes,
       showTraffic,
       showDisplayTimes,
+      isCumulative,
       map,
       year,
       month,
     } = this.props
-    const trafficData = [...this.state.traffic[map.id]]
+    let trafficData = [...this.state.traffic[map.id]]
     trafficData.sort((a, b) => a.day - b.day)
+
+    const totalDisplayTimes = trafficData.reduce(
+      (prev, { displayTimes }) => prev + displayTimes,
+      0,
+    )
+
+    const totalTraffic = Math.round(
+      trafficData.reduce((prev, { traffic }) => prev + traffic, 0) / 1000000,
+    )
+
+    if (isCumulative) {
+      trafficData = trafficData.reduce((prev, data) => {
+        if (prev.length === 0) {
+          return [data]
+        } else {
+          const lastData = prev[prev.length - 1]
+          const nextData = {
+            ...data,
+            displayTimes: lastData.displayTimes + data.displayTimes,
+            traffic: lastData.traffic + data.traffic,
+          }
+          return [...prev, nextData]
+        }
+      }, [])
+    }
 
     const graphData = trafficData.map(data => ({
       day: data.day,
       displayTimes: data.displayTimes,
       traffic: data.traffic,
     }))
-
-    const totalDisplayTimes = graphData.reduce(
-      (prev, { displayTimes }) => prev + displayTimes,
-      0,
-    )
-
-    const totalTraffic = Math.round(
-      graphData.reduce((prev, { traffic }) => prev + traffic, 0) / 1000000,
-    )
 
     return (
       <Card className={classes.card}>
@@ -189,6 +206,7 @@ SimpleCard.propTypes = {
   // ownProps
   showTraffic: PropTypes.bool.isRequired,
   showDisplayTimes: PropTypes.bool.isRequired,
+  isCumulative: PropTypes.bool.isRequired,
   map: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
