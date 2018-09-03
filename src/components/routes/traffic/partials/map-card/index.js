@@ -27,7 +27,7 @@ const styles = {
   },
 }
 
-export class SimpleCard extends React.Component {
+export class MapCard extends React.Component {
   /**
    * constructor
    * @param  {object} props React props.
@@ -58,6 +58,8 @@ export class SimpleCard extends React.Component {
         year: nextProps.year,
         month: nextProps.month,
       }
+    } else {
+      return prevState
     }
   }
 
@@ -200,7 +202,7 @@ export class SimpleCard extends React.Component {
   }
 }
 
-SimpleCard.propTypes = {
+MapCard.propTypes = {
   // styleProps
   classes: PropTypes.object.isRequired,
   // ownProps
@@ -216,4 +218,4 @@ SimpleCard.propTypes = {
   month: PropTypes.number.isRequired,
 }
 
-export default withStyles(styles)(SimpleCard)
+export default withStyles(styles)(MapCard)
