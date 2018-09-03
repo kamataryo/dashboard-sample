@@ -12,8 +12,10 @@ const initialMapsState = {
 
 export const Actions = {}
 
-export const createActions = {}
-
-const reducer = (state = initialMapsState, action) => state
+const reducer = (state = initialMapsState, action) => {
+  const { type } = action
+  console.log(type)
+  return state
+}
 
 export default reducer

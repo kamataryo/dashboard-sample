@@ -18,7 +18,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { mailFolderListItems, systemOperationMenuItems } from './tiles'
+import { loginUserListItems, systemOperationMenuItems } from './tiles'
 
 class CommonMenu extends React.Component {
   /**
@@ -122,7 +122,7 @@ class CommonMenu extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List>{mailFolderListItems(isLoggedIn)}</List>
+          <List>{loginUserListItems(isLoggedIn)}</List>
           <Divider />
           <List>{systemOperationMenuItems}</List>
         </Drawer>

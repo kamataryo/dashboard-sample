@@ -14,65 +14,71 @@ import UserIcon from '@material-ui/icons/Person'
 import GroupIcon from '@material-ui/icons/Group'
 import InfoIcon from '@material-ui/icons/Info'
 
-export const mailFolderListItems = isLoggedIn => (
-  <div>
-    <Link to="/">
-      <ListItem button>
-        <ListItemIcon>
-          <HomeIcon />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
-      </ListItem>
-    </Link>
+export const loginUserListItems = isLoggedIn => {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth() + 1
 
-    {isLoggedIn && (
-      <Link to="/traffic">
+  return (
+    <div>
+      <Link to="/">
         <ListItem button>
           <ListItemIcon>
-            <ChartIcon />
+            <HomeIcon />
           </ListItemIcon>
-          <ListItemText primary="Trafic" />
+          <ListItemText primary="Home" />
         </ListItem>
       </Link>
-    )}
 
-    {isLoggedIn && (
-      <Link to="/maps">
-        <ListItem button>
-          <ListItemIcon>
-            <MapIcon />
-          </ListItemIcon>
-          <ListItemText primary="Maps" />
-        </ListItem>
-      </Link>
-    )}
+      {isLoggedIn && (
+        <Link to={`/traffic/${year}/${month}`}>
+          <ListItem button>
+            <ListItemIcon>
+              <ChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Trafic" />
+          </ListItem>
+        </Link>
+      )}
 
-    {isLoggedIn && (
-      <Link to="/profile">
-        <ListItem button>
-          <ListItemIcon>
-            <UserIcon />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
-        </ListItem>
-      </Link>
-    )}
+      {isLoggedIn && (
+        <Link to="/maps">
+          <ListItem button>
+            <ListItemIcon>
+              <MapIcon />
+            </ListItemIcon>
+            <ListItemText primary="Maps" />
+          </ListItem>
+        </Link>
+      )}
 
-    {isLoggedIn && (
-      <Link to="/groups">
-        <ListItem button>
-          <ListItemIcon>
-            <GroupIcon />
-          </ListItemIcon>
-          <ListItemText primary="Groups" />
-        </ListItem>
-      </Link>
-    )}
-  </div>
-)
+      {isLoggedIn && (
+        <Link to="/profile">
+          <ListItem button>
+            <ListItemIcon>
+              <UserIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
+        </Link>
+      )}
+
+      {isLoggedIn && (
+        <Link to="/groups">
+          <ListItem button>
+            <ListItemIcon>
+              <GroupIcon />
+            </ListItemIcon>
+            <ListItemText primary="Groups" />
+          </ListItem>
+        </Link>
+      )}
+    </div>
+  )
+}
 
 export const systemOperationMenuItems = (
-  <Link to={ '/information' }>
+  <Link to={'/information'}>
     <ListItem button>
       <ListItemIcon>
         <InfoIcon />
