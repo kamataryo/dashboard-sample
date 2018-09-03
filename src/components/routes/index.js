@@ -16,6 +16,7 @@ import Logout from './logout'
 import Traffic from './traffic'
 import Maps from './maps'
 import Map from './map'
+import Group from './group'
 import Groups from './groups'
 import Information from './information'
 
@@ -32,6 +33,7 @@ const routeConfig = [
   { path: '/maps', exact: true, Content: Maps },
   { path: '/maps/:mapId', exact: true, Content: Map },
   { path: '/groups', exact: true, Content: Groups },
+  { path: '/groups/:groupId', exact: true, Content: Group },
   { path: '/information', exact: true, Content: Information },
 ]
 
