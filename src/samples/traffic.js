@@ -1,4 +1,6 @@
-const range = new Array(30).fill(0).map((_0, i) => i)
+const range = new Array(Math.floor(Math.random() * 20) + 10)
+  .fill(0)
+  .map((_0, i) => i + 1)
 
 const getMonthlyData = () =>
   range.map(i => ({

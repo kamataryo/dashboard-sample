@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
+import Link from 'src/components/commons/refined-link'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
@@ -47,63 +48,71 @@ const SimpleCard = props => {
   )
 
   return (
-    <Card className={ classes.card }>
+    <Card className={classes.card}>
       <CardContent>
         <Typography variant="headline" component="h2">
-          {map.name}
+          <Link to={`/maps/${map.id}`}>{map.name}</Link>
         </Typography>
 
         <Typography
           color="textSecondary"
           component="p"
-          style={ { marginBottom: 10 } }
+          style={{ marginBottom: 10 }}
         >
           {map.description || '(no description)'}
         </Typography>
 
         <Typography component="p">{`Total: ${totalTraffic} MB (${totalDisplayTimes} Times)`}</Typography>
         <LineChart
-          width={ 800 }
-          height={ 300 }
-          data={ graphData }
-          margin={ { top: 10, right: 30, left: 30, bottom: 10 } }
+          width={800}
+          height={300}
+          data={graphData}
+          margin={{ top: 20, right: 30, left: 30, bottom: 20 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis yAxisId={ 'left' }>
-            <Label angle={ 270 } position="left" style={ { textAnchor: 'middle' } }>
+          <XAxis
+            dataKey={'day'}
+            // scale={'linear'}
+            type={'number'}
+            domain={[1, 31]}
+            ticks={[5, 10, 15, 20, 25, 30]}
+          >
+            <Label position={'bottom'}>{'day'}</Label>
+          </XAxis>
+          <YAxis yAxisId={'left'}>
+            <Label angle={270} position="left" style={{ textAnchor: 'middle' }}>
               {'Times [n]'}
             </Label>
           </YAxis>
           <YAxis
-            yAxisId={ 'right' }
-            orientation={ 'right' }
-            tickFormatter={ tick => tick / 1000000 }
+            yAxisId={'right'}
+            orientation={'right'}
+            tickFormatter={tick => tick / 1000000}
           >
-            <Label angle={ 90 } position="right" style={ { textAnchor: 'middle' } }>
+            <Label angle={90} position="right" style={{ textAnchor: 'middle' }}>
               {'Traffic [MB]'}
             </Label>
           </YAxis>
           <Tooltip
-            formatter={ (value, name) =>
+            formatter={(value, name) =>
               name === 'traffic' ? value / 1000000 + ' MB' : value
             }
           />
           <Line
-            yAxisId={ 'left' }
-            type={ 'monotone' }
-            dataKey={ 'displayTimes' }
-            stroke={ '#8884d8' }
-            strokeWidth={ showDisplayTimes ? 1 : 0 }
-            dot={ showDisplayTimes }
+            yAxisId={'left'}
+            type={'monotone'}
+            dataKey={'displayTimes'}
+            stroke={'#8884d8'}
+            strokeWidth={showDisplayTimes ? 1 : 0}
+            dot={showDisplayTimes}
           />
           <Line
-            yAxisId={ 'right' }
-            type={ 'monotone' }
-            dataKey={ 'traffic' }
-            stroke={ '#82ca9d' }
-            strokeWidth={ showTraffic ? 1 : 0 }
-            dot={ showTraffic }
+            yAxisId={'right'}
+            type={'monotone'}
+            dataKey={'traffic'}
+            stroke={'#82ca9d'}
+            strokeWidth={showTraffic ? 1 : 0}
+            dot={showTraffic}
           />
         </LineChart>
       </CardContent>
