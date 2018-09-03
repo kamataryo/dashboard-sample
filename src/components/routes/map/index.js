@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import MapboxGLMap from './partials/mapbox-gl-map'
 import UrlList from './partials/url-list'
+import Tokens from './partials/tokens'
 import Button from '@material-ui/core/Button'
 
 import { createActions as createMapsActions } from 'src/reducers/maps'
@@ -56,6 +57,10 @@ export class Map extends React.Component {
 
         <p>
           <UrlList />
+        </p>
+
+        <p>
+          <Tokens />
         </p>
 
         <p>
