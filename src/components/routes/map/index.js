@@ -4,8 +4,27 @@ import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import MapboxGLMap from './partials/mapbox-gl-map'
 import UrlList from './partials/url-list'
+import Button from '@material-ui/core/Button'
+
+import { createActions as createMapsActions } from 'src/reducers/maps'
+import history from 'src/libs/history'
 
 export class Map extends React.Component {
+  /**
+   * delete button handler
+   * @return {void}
+   */
+  onDeleteClick = () => {
+    const {
+      routeParams: { mapId },
+      maps,
+      deleteMap,
+    } = this.props
+    const mapIndex = maps.map(map => map.id).indexOf(mapId)
+    history.push(`${process.env.PUBLIC_URL}/maps`)
+    deleteMap(mapIndex)
+  }
+
   /**
    * render
    * @return {ReactElement|null|false} render a React element.
@@ -35,7 +54,19 @@ export class Map extends React.Component {
 
         <MapboxGLMap style={style} />
 
-        <UrlList />
+        <p>
+          <UrlList />
+        </p>
+
+        <p>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.onDeleteClick}
+          >
+            {'delete this map'}
+          </Button>
+        </p>
       </div>
     )
   }
@@ -52,6 +83,7 @@ Map.propTypes = {
   style: PropTypes.object.isRequired,
   routeParams: PropTypes.shape({ mapId: PropTypes.string.isRequired })
     .isRequired,
+  deleteMap: PropTypes.func.isRequired,
 }
 
 /**
@@ -71,4 +103,19 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(Map)
+/**
+ * map dispatch to props
+ * @param  {function} dispatch dispatcher
+ * @param  {object}   ownProps own props
+ * @return {object}            dispatch props
+ */
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteMap: index => dispatch(createMapsActions.deleteMap(index)),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Map)
