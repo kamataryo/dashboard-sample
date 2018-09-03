@@ -32,7 +32,7 @@ export const createActions = {
   }),
 }
 
-const reducer = (state = initialAuthState, action) => {
+export const reducer = (state = initialAuthState, action) => {
   const { type } = action
 
   if (type === LOGIN) {

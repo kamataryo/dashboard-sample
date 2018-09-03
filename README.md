@@ -2,6 +2,8 @@
 
 This porject is in development.
 
+[![Build Status](https://travis-ci.org/tilecloud/dashboard.svg?branch=master)](https://travis-ci.org/tilecloud/dashboard)
+
 DEMO: https://tilecloud.github.io/dashboard
 
 ## development
@@ -16,7 +18,7 @@ $ yarn test # or npm test
 
 ## deploy
 
-Deploy
+Deploy DEMO. Only for commiters.
 
 ```shell
 $ npm run deploy
