@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { createActions as createProfileAction } from 'src/reducers/profile'
 import Input from './partials/input'
 import Button from '@material-ui/core/Button'
-import { auth } from 'src/middlewares/auth-middleware'
 
 export class Profile extends React.Component {
   /**
@@ -40,28 +39,10 @@ export class Profile extends React.Component {
 
   // TODO: request fails
   createUpdateMetadataHandler = kv => () => {
-    auth.auth0.checkSession(
-      {
-        audience: 'https://kamataryo-sandbox.auth0.com/api/v2/',
-        scope: 'openid profile',
-      },
-      (err, result) => console.log({ err, result }),
-    )
-
     // const { accessToken } = this.props
-    // console.log('metadata: ' + JSON.stringify(kv))
-    //
-    // const auth0Manage = new auth0.Management({
-    //   domain: 'kamataryo-sandbox.auth0.com',
-    //   token: accessToken,
-    // })
-    // auth0Manage.getUser(this.props.profile.sub, console.log)
-
-    // patchUserMetadata(
-    //   this.props.profile.sub,
-    //   kv,
-    //   console.log,
-    // )
+    console.log('metadata: ' + JSON.stringify(kv))
+    // call API here
+    // patchUserMetadata(this.props.profile.sub, kv, console.log)
   }
 
   /**
@@ -80,35 +61,35 @@ export class Profile extends React.Component {
         <p>{'sub: ' + (sub || '')}</p>
 
         <p>
-          <img src={ picture } alt={ name } />
+          <img src={picture} alt={name} />
         </p>
 
-        <div style={ { display: 'flex' } }>
+        <div style={{ display: 'flex' }}>
           <Input
-            label={ 'nickname' }
-            onChange={ this.createProfileUpdateHandler('nickname') }
-            value={ nickname }
-            style={ { flexGrow: 1 } }
+            label={'nickname'}
+            onChange={this.createProfileUpdateHandler('nickname')}
+            value={nickname}
+            style={{ flexGrow: 1 }}
           />
           <Button
-            variant={ 'text' }
-            color={ 'default' }
-            onClick={ this.createUpdateMetadataHandler({ nickname }) }
+            variant={'text'}
+            color={'default'}
+            onClick={this.createUpdateMetadataHandler({ nickname })}
           >
             {'send'}
           </Button>
         </div>
-        <div style={ { display: 'flex' } }>
+        <div style={{ display: 'flex' }}>
           <Input
-            label={ 'name' }
-            onChange={ this.createProfileUpdateHandler('name') }
-            value={ name }
-            style={ { flexGrow: 1 } }
+            label={'name'}
+            onChange={this.createProfileUpdateHandler('name')}
+            value={name}
+            style={{ flexGrow: 1 }}
           />{' '}
           <Button
-            variant={ 'text' }
-            color={ 'default' }
-            onClick={ this.createUpdateMetadataHandler({ name }) }
+            variant={'text'}
+            color={'default'}
+            onClick={this.createUpdateMetadataHandler({ name })}
           >
             {'send'}
           </Button>

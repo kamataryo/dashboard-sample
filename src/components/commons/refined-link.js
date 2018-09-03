@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export const RefinedLink = props => {
   const innerProps = {
     ...props,
-    to: `${process.env.PUBLIC_URL}${props.to}`,
+    to: `${props.to}`,
     children: void 0,
     style: {
       ...props.style,
@@ -12,7 +12,7 @@ export const RefinedLink = props => {
       color: 'inherit',
     },
   }
-  return <Link { ...innerProps }>{props.children}</Link>
+  return <Link {...innerProps}>{props.children}</Link>
 }
 
 export default RefinedLink

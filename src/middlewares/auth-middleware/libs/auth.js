@@ -23,6 +23,7 @@ export default class Auth {
 
   handleAuthentication(callbacks) {
     this.auth0.parseHash((err, authResult) => {
+      console.log(authResult)
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult, callbacks)
         history.replace('/')
