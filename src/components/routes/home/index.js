@@ -37,7 +37,7 @@ export class Home extends React.Component {
         <Card>
           <p style={{ margin: 10, padding: 5 }}>
             {
-              'ATTENTION: This porject is in development. You can log in/sign up for a sandbox environment and the users will be deleted witout notice.'
+              'ATTENTION: This porject is in development. You can log in / sign up for a sandbox backend and those users will be deleted witout notice.'
             }
           </p>
         </Card>
