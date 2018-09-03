@@ -165,6 +165,7 @@ export class SimpleCard extends React.Component {
               stroke={'#8884d8'}
               strokeWidth={showDisplayTimes ? 1 : 0}
               dot={showDisplayTimes}
+              animationDuration={200}
             />
             <Line
               yAxisId={'right'}
@@ -173,6 +174,7 @@ export class SimpleCard extends React.Component {
               stroke={'#82ca9d'}
               strokeWidth={showTraffic ? 1 : 0}
               dot={showTraffic}
+              animationDuration={200}
             />
           </LineChart>
         </CardContent>
