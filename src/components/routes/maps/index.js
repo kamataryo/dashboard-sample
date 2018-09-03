@@ -14,6 +14,8 @@ import IconButton from '@material-ui/core/IconButton'
 import MapIcon from '@material-ui/icons/Map'
 import DeleteIcon from '@material-ui/icons/Delete'
 
+import { createActions as createMapsActions } from 'src/reducers/maps'
+
 const styles = theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -21,12 +23,12 @@ const styles = theme => ({
 })
 
 export const Maps = props => {
-  const { classes, maps } = props
+  const { classes, maps, deleteMap } = props
   return (
     <div>
       <h1>{'Maps'}</h1>
       <p>{'Configure your maps here.'}</p>
-      {maps.map(map => (
+      {maps.map((map, index) => (
         <div key={`each-map-link-to-${map.id}`} className={classes.paper}>
           <List dense={false}>
             <ListItem>
@@ -43,7 +45,10 @@ export const Maps = props => {
               </Link>
 
               <ListItemSecondaryAction>
-                <IconButton aria-label="Delete">
+                <IconButton
+                  aria-label="Delete"
+                  onClick={() => deleteMap(index)}
+                >
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -57,6 +62,13 @@ export const Maps = props => {
 
 Maps.propTypes = {
   classes: PropTypes.object.isRequired,
+  maps: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  deleteMap: PropTypes.func.isRequired,
 }
 
 /**
@@ -71,4 +83,19 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Maps))
+/**
+ * map dispatch to props
+ * @param  {function} dispatch dispatcher
+ * @param  {object}   ownProps own props
+ * @return {object}            dispatch props
+ */
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteMap: index => dispatch(createMapsActions.deleteMap(index)),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles)(Maps))
