@@ -25,10 +25,10 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult, callbacks)
-        history.replace(`${process.env.PUBLIC_URL}/`)
+        history.replace('/')
       } else if (err) {
         console.error(err)
-        history.replace(`${process.env.PUBLIC_URL}/`)
+        history.replace('/')
       }
     })
   }

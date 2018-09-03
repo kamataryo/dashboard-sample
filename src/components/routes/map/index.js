@@ -22,7 +22,7 @@ export class Map extends React.Component {
       deleteMap,
     } = this.props
     const mapIndex = maps.map(map => map.id).indexOf(mapId)
-    history.push(`${process.env.PUBLIC_URL}/maps`)
+    history.push('/maps')
     deleteMap(mapIndex)
   }
 

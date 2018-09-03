@@ -19,7 +19,7 @@ export class Group extends React.Component {
       deleteGroup,
     } = this.props
     const groupIndex = groups.map(group => group.id).indexOf(groupId)
-    history.push(`${process.env.PUBLIC_URL}/groups`)
+    history.push('/groups')
     deleteGroup(groupIndex)
   }
 
