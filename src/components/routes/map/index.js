@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import maps from 'src/samples/maps'
 import Typography from '@material-ui/core/Typography'
 import MapboxGLMap from './partials/mapbox-gl-map'
 import UrlList from './partials/url-list'
@@ -15,7 +14,9 @@ export class Map extends React.Component {
     const {
       routeParams: { mapId },
       style,
+      maps,
     } = this.props
+
     const map = maps.find(map => map.id === mapId)
 
     return (
@@ -27,12 +28,12 @@ export class Map extends React.Component {
         <Typography
           color="textSecondary"
           component="p"
-          style={ { marginBottom: 10 } }
+          style={{ marginBottom: 10 }}
         >
           {map.description || '(no description)'}
         </Typography>
 
-        <MapboxGLMap style={ style } />
+        <MapboxGLMap style={style} />
 
         <UrlList />
       </div>
@@ -58,6 +59,7 @@ const mapStateToProps = (state, ownProps) => {
   } = ownProps
 
   return {
+    maps: state.maps.data,
     style: state.maps.styles[mapId],
   }
 }

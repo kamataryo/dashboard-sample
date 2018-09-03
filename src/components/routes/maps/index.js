@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import maps from 'src/samples/maps'
 import Link from 'src/components/commons/refined-link'
 
 import List from '@material-ui/core/List'
@@ -21,16 +21,16 @@ const styles = theme => ({
 })
 
 export const Maps = props => {
-  const { classes } = props
+  const { classes, maps } = props
   return (
     <div>
       <h1>{'Maps'}</h1>
       <p>{'Configure your maps here.'}</p>
       {maps.map(map => (
-        <div key={ `each-map-link-to-${map.id}` } className={ classes.paper }>
-          <List dense={ false }>
+        <div key={`each-map-link-to-${map.id}`} className={classes.paper}>
+          <List dense={false}>
             <ListItem>
-              <Link to={ `/maps/${map.id}` }>
+              <Link to={`/maps/${map.id}`}>
                 <ListItemAvatar>
                   <Avatar>
                     <MapIcon />
@@ -38,8 +38,8 @@ export const Maps = props => {
                 </ListItemAvatar>
               </Link>
 
-              <Link to={ `/maps/${map.id}` } style={ { paddingLeft: 16 } }>
-                <ListItemText primary={ map.name } />
+              <Link to={`/maps/${map.id}`} style={{ paddingLeft: 16 }}>
+                <ListItemText primary={map.name} />
               </Link>
 
               <ListItemSecondaryAction>
@@ -59,4 +59,16 @@ Maps.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Maps)
+/**
+ * map state to props
+ * @param  {object} state    state tree
+ * @param  {object} ownProps own props
+ * @return {object}          state props
+ */
+const mapStateToProps = state => {
+  return {
+    maps: state.maps.data,
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Maps))
