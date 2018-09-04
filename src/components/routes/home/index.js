@@ -41,23 +41,8 @@ export class Home extends React.Component {
             }
           </p>
         </Card>
-        <p>
-          {isLoggedIn
-            ? 'You have successfully logged in!'
-            : 'You have\'nt logged in yet :('}
-        </p>
 
-        {isLoggedIn ? (
-          <Link to={'/logout'}>
-            <Button
-              variant={'contained'}
-              color={'primary'}
-              className={classes.button}
-            >
-              {'Logout'}
-            </Button>
-          </Link>
-        ) : (
+        {!isLoggedIn && (
           <Link to={'/login'}>
             <Button
               variant={'contained'}

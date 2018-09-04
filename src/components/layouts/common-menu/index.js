@@ -19,8 +19,13 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { loginUserListItems, systemOperationMenuItems } from './tiles'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
 
 class CommonMenu extends React.Component {
+  state = {
+    anchorEl: null,
+  }
   /**
    * propTypes
    * @type {object}
@@ -44,11 +49,20 @@ class CommonMenu extends React.Component {
     closeDrawer: PropTypes.func.isRequired,
   }
 
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget })
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null })
+  }
+
   /**
    * render
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
+    const { anchorEl } = this.state
     const {
       // ownProps
       children,
@@ -66,23 +80,23 @@ class CommonMenu extends React.Component {
     } = this.props
 
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <AppBar
           position="absolute"
-          className={ classNames(
+          className={classNames(
             classes.appBar,
             isDrawerOpen && classes.appBarShift,
-          ) }
+          )}
         >
-          <Toolbar disableGutters={ !isDrawerOpen }>
+          <Toolbar disableGutters={!isDrawerOpen}>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
-              onClick={ openDrawer }
-              className={ classNames(
+              onClick={openDrawer}
+              className={classNames(
                 classes.menuButton,
                 isDrawerOpen && classes.hide,
-              ) }
+              )}
             >
               <MenuIcon />
             </IconButton>
@@ -90,30 +104,55 @@ class CommonMenu extends React.Component {
               variant="title"
               color="inherit"
               noWrap
-              style={ { flexGrow: 1 } }
+              style={{ flexGrow: 1 }}
             >
-              <Link to={ '/' }>Dashboard</Link>
+              <Link to={'/'}>Dashboard</Link>
             </Typography>
 
             {isLoggedIn && (
-              <Link to={ '/profile' }>
-                <Avatar alt={ name } src={ picture } style={ { margin: 10 } } />
-              </Link>
+              <Avatar
+                alt={name}
+                src={picture}
+                style={{ margin: 10 }}
+                onClick={this.handleMenu}
+              />
             )}
+
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={!!anchorEl}
+              onClose={this.handleClose}
+            >
+              <MenuItem onClick={this.handleClose}>
+                <Link to={'/profile'}>Profile</Link>
+              </MenuItem>
+              <MenuItem onClick={this.handleClose}>
+                <Link to={'/logout'}>Logout</Link>
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
         <Drawer
           variant="permanent"
-          classes={ {
+          classes={{
             paper: classNames(
               classes.drawerPaper,
               !isDrawerOpen && classes.drawerPaperClose,
             ),
-          } }
-          open={ isDrawerOpen }
+          }}
+          open={isDrawerOpen}
         >
-          <div className={ classes.toolbar }>
-            <IconButton onClick={ closeDrawer }>
+          <div className={classes.toolbar}>
+            <IconButton onClick={closeDrawer}>
               {theme.direction === 'rtl' ? (
                 <ChevronRightIcon />
               ) : (
@@ -127,8 +166,8 @@ class CommonMenu extends React.Component {
           <List>{systemOperationMenuItems}</List>
         </Drawer>
 
-        <main className={ classes.content }>
-          <div className={ classes.toolbar } />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
           {children}
         </main>
       </div>
