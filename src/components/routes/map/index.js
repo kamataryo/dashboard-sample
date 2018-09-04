@@ -6,11 +6,26 @@ import MapboxGLMap from './partials/mapbox-gl-map'
 import UrlList from './partials/url-list'
 import Tokens from './partials/tokens'
 import Button from '@material-ui/core/Button'
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 
 import { createActions as createMapsActions } from 'src/reducers/maps'
 import history from 'src/libs/history'
 
+const getToken = () =>
+  'SAMPLE-' +
+  [
+    Math.floor(Math.random() * 256 * 256).toString(16),
+    Math.floor(Math.random() * 256 * 256).toString(16),
+    Math.floor(Math.random() * 256 * 256).toString(16),
+    Math.floor(Math.random() * 256 * 256).toString(16),
+  ].join('-')
+
 export class Map extends React.Component {
+  state = {
+    apiKey: getToken(),
+  }
+
   /**
    * delete button handler
    * @return {void}
@@ -31,6 +46,7 @@ export class Map extends React.Component {
    * @return {ReactElement|null|false} render a React element.
    */
   render() {
+    const { apiKey } = this.state
     const {
       routeParams: { mapId },
       style,
@@ -39,6 +55,7 @@ export class Map extends React.Component {
 
     const map = maps.find(map => map.id === mapId)
 
+    // TODO: check if Browser can use File API
     return (
       <div>
         <Typography variant="headline" component="h2">
@@ -56,12 +73,66 @@ export class Map extends React.Component {
         <MapboxGLMap style={style} />
 
         <p>
-          <UrlList />
+          <a
+            style={{ textDecoration: 'none' }}
+            href={window.URL.createObjectURL(
+              new Blob([JSON.stringify(style)], { type: 'application/json' }),
+            )}
+            download={'style.json'}
+          >
+            <Button variant="contained" color="default">
+              {'Download Style'}
+              <CloudDownloadIcon style={{ marginLeft: 8 }} />
+            </Button>
+          </a>
+
+          <label htmlFor="upload-button">
+            <Button
+              variant="contained"
+              color="default"
+              onClick={() => this.InputUpload.click()}
+            >
+              {'Upload Style'}
+              <CloudUploadIcon style={{ marginLeft: 8 }} />
+            </Button>
+            <input
+              ref={ref => (this.InputUpload = ref)}
+              style={{ display: 'none' }}
+              id={'upload-button'}
+              type="file"
+              onChange={e => {
+                const fileReader = new FileReader()
+                fileReader.readAsDataURL(e.target.files[0])
+
+                fileReader.onload = () => {
+                  const style = JSON.parse(
+                    atob(fileReader.result.split(',')[1]),
+                  )
+                  const mapIndex = maps.map(map => map.id).indexOf(mapId)
+                  this.props.updateMapStyle(mapIndex, style)
+                }
+              }}
+            />
+          </label>
         </p>
 
+        <div>
+          <UrlList />
+        </div>
+
         <p>
-          <Tokens />
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => this.setState({ apiKey: getToken() })}
+          >
+            {'refresh token'}
+          </Button>
         </p>
+
+        <div>
+          <Tokens value={apiKey} />
+        </div>
 
         <p>
           <Button
@@ -88,6 +159,7 @@ Map.propTypes = {
   style: PropTypes.object.isRequired,
   routeParams: PropTypes.shape({ mapId: PropTypes.string.isRequired })
     .isRequired,
+  updateMapStyle: PropTypes.func.isRequired,
   deleteMap: PropTypes.func.isRequired,
 }
 
@@ -116,6 +188,8 @@ const mapStateToProps = (state, ownProps) => {
  */
 const mapDispatchToProps = dispatch => {
   return {
+    updateMapStyle: (index, style) =>
+      dispatch(createMapsActions.updateMap(index, { style })),
     deleteMap: index => dispatch(createMapsActions.deleteMap(index)),
   }
 }

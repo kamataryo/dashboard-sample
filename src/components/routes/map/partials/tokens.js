@@ -32,33 +32,31 @@ class Tokens extends React.Component {
    */
   constructor(props) {
     super(props)
-    this.state = { value: 0 }
+    this.state = { index: 0 }
   }
-  handleChange = (event, value) => this.setState({ value })
+  handleChange = (event, index) => this.setState({ index })
 
   render() {
-    const { classes } = this.props
-    const { value } = this.state
+    const { classes, value } = this.props
+    const { index } = this.state
 
     return (
       <div className={classes.root}>
-        <Tabs value={value} onChange={this.handleChange}>
+        <Tabs value={index} onChange={this.handleChange}>
           <Tab label="api key" />
           <Tab label="iframe" />
           <Tab label="JavaScript" />
         </Tabs>
-        {value === 0 && <TabContainer>{'aaabbbcccddd111222333'}</TabContainer>}
-        {value === 1 && (
+        {index === 0 && <TabContainer>{value}</TabContainer>}
+        {index === 1 && (
           <TabContainer>
-            {
-              '<iframe frameborder="0"><script src="https://example.com/foo/bar#key=aaabbbcccddd111222333" /></iframe>'
-            }
+            {`<iframe frameborder="0"><script src="https://example.com/foo/bar?key=${value}" /></iframe>`}
           </TabContainer>
         )}
-        {value === 2 && (
+        {index === 2 && (
           <TabContainer>{`const map = new mapboxgl.Map({
-    container: this.mapContainer,
-    style: 'https://example.com/maps/:mapid/style.json',
+    container: document.getElementById('map'),
+    style: 'https://example.com/maps/:mapid/style.json?key=${value}',
     localIdeographFontFamily: ['sans-serif'],
     attributionControl: true,
     hash: true,
@@ -70,6 +68,9 @@ class Tokens extends React.Component {
 }
 
 Tokens.propTypes = {
+  // ownProps
+  value: PropTypes.string.isRequired,
+  // styleProps
   classes: PropTypes.object.isRequired,
 }
 

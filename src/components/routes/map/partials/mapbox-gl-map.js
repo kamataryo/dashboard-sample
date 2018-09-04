@@ -52,9 +52,7 @@ export class MapboxGLMap extends React.Component {
    */
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.state.map && this.props.style !== nextProps.style) {
-      console.log(1)
       this.state.map.setStyle(nextProps.style)
-      console.log(2)
     }
   }
 
@@ -75,9 +73,9 @@ export class MapboxGLMap extends React.Component {
   render() {
     return (
       <div
-        className={ 'map-container' }
-        style={ { width: 500, height: 500 } }
-        ref={ el => (this.mapContainer = el) }
+        className={'map-container'}
+        style={{ width: 500, height: 500 }}
+        ref={el => (this.mapContainer = el)}
       />
     )
   }

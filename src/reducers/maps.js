@@ -12,16 +12,28 @@ const initialMapsState = {
 }
 
 const ADD_MAP = 'MAPS.ADD_MAP'
+const UPDATE_MAP = 'MAPS.UPDATE_MAP'
 const DELETE_MAP = 'MAPS.DELETE_MAP'
 
 export const Actions = {
   ADD_MAP,
+  UPDATE_MAP,
   DELETE_MAP,
 }
 
 export const createActions = {
-  deleteMap: index => ({ type: DELETE_MAP, payload: { index } }),
   addMap: map => ({ type: ADD_MAP, payload: { map } }),
+  updateMap: (index, { map, style } = {}) => {
+    if ((map || {}).id) {
+      throw 'ID should not be altered.'
+    } else {
+      return {
+        type: UPDATE_MAP,
+        payload: { index, map, style },
+      }
+    }
+  },
+  deleteMap: index => ({ type: DELETE_MAP, payload: { index } }),
 }
 
 export const reducer = (state = initialMapsState, action) => {
@@ -32,6 +44,17 @@ export const reducer = (state = initialMapsState, action) => {
       data: { $push: [map] },
       styles: { [map.id]: { $set: {} } },
     })
+  } else if (type === UPDATE_MAP) {
+    const {
+      payload: { index, map, style },
+    } = action
+    const { id } = state.data[index]
+
+    const $updator = {}
+    map && ($updator.data = { [index]: { $merge: map } })
+    style && ($updator.styles = { [id]: { $set: style } })
+
+    return update(state, $updator)
   } else if (type === DELETE_MAP) {
     const { index } = action.payload
     const { id } = state.data[index]
