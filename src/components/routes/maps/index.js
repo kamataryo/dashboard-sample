@@ -28,25 +28,24 @@ export const Maps = props => {
   const { classes, maps, addMap, deleteMap } = props
   return (
     <div>
-      <h1>
-        {'Maps'}
-        <IconButton
-          style={{ marginLeft: 5 }}
-          onClick={() => {
-            const mapNames = maps.map(map => map.name)
-            let maxNewMapNamePrefix = 0
-            let newMapName = ''
-            do {
-              maxNewMapNamePrefix++
-              newMapName = `New Map (${maxNewMapNamePrefix})`
-            } while (mapNames.includes(newMapName))
-            // TODO: id should be numbered by server
-            addMap({ id: `new-map-${maxNewMapNamePrefix}`, name: newMapName })
-          }}
-        >
-          <AddIcon />
-        </IconButton>
-      </h1>
+      <h1>{'Maps'}</h1>
+      <IconButton
+        style={{ marginLeft: 5 }}
+        onClick={() => {
+          const mapNames = maps.map(map => map.name)
+          let maxNewPrefix = 0
+          let newName = ''
+          do {
+            maxNewPrefix++
+            newName = `New Map (${maxNewPrefix})`
+          } while (mapNames.includes(newName))
+          // TODO: id should be numbered by server
+          addMap({ id: `new-map-${maxNewPrefix}`, name: newName })
+        }}
+      >
+        <AddIcon />
+      </IconButton>
+
       <p>{'Configure your maps here.'}</p>
       {maps.map((map, index) => (
         <div key={`each-map-link-to-${map.id}`} className={classes.paper}>
@@ -113,8 +112,8 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => {
   return {
-    deleteMap: index => dispatch(createMapsActions.deleteMap(index)),
     addMap: map => dispatch(createMapsActions.addMap(map)),
+    deleteMap: index => dispatch(createMapsActions.deleteMap(index)),
   }
 }
 
