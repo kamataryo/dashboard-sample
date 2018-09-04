@@ -10,8 +10,10 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
+
 import IconButton from '@material-ui/core/IconButton'
 import MapIcon from '@material-ui/icons/Map'
+import AddIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import { createActions as createMapsActions } from 'src/reducers/maps'
@@ -23,10 +25,28 @@ const styles = theme => ({
 })
 
 export const Maps = props => {
-  const { classes, maps, deleteMap } = props
+  const { classes, maps, addMap, deleteMap } = props
   return (
     <div>
-      <h1>{'Maps'}</h1>
+      <h1>
+        {'Maps'}
+        <IconButton
+          style={{ marginLeft: 5 }}
+          onClick={() => {
+            const mapNames = maps.map(map => map.name)
+            let maxNewMapNamePrefix = 0
+            let newMapName = ''
+            do {
+              maxNewMapNamePrefix++
+              newMapName = `New Map (${maxNewMapNamePrefix})`
+            } while (mapNames.includes(newMapName))
+            // TODO: id should be numbered by server
+            addMap({ id: `new-map-${maxNewMapNamePrefix}`, name: newMapName })
+          }}
+        >
+          <AddIcon />
+        </IconButton>
+      </h1>
       <p>{'Configure your maps here.'}</p>
       {maps.map((map, index) => (
         <div key={`each-map-link-to-${map.id}`} className={classes.paper}>
@@ -68,6 +88,8 @@ Maps.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  // dispatchProps
+  addMap: PropTypes.func.isRequired,
   deleteMap: PropTypes.func.isRequired,
 }
 
@@ -92,6 +114,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     deleteMap: index => dispatch(createMapsActions.deleteMap(index)),
+    addMap: map => dispatch(createMapsActions.addMap(map)),
   }
 }
 

@@ -11,19 +11,28 @@ const initialMapsState = {
       .reduce((prev, id) => ({ ...prev, [id]: style }), {}), // key is map id
 }
 
+const ADD_MAP = 'MAPS.ADD_MAP'
 const DELETE_MAP = 'MAPS.DELETE_MAP'
 
 export const Actions = {
+  ADD_MAP,
   DELETE_MAP,
 }
 
 export const createActions = {
   deleteMap: index => ({ type: DELETE_MAP, payload: { index } }),
+  addMap: map => ({ type: ADD_MAP, payload: { map } }),
 }
 
-const reducer = (state = initialMapsState, action) => {
+export const reducer = (state = initialMapsState, action) => {
   const { type } = action
-  if (type === DELETE_MAP) {
+  if (type === ADD_MAP) {
+    const { map } = action.payload
+    return update(state, {
+      data: { $push: [map] },
+      styles: { [map.id]: { $set: {} } },
+    })
+  } else if (type === DELETE_MAP) {
     const { index } = action.payload
     const { id } = state.data[index]
     return update(state, {
