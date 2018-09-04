@@ -25,7 +25,7 @@ export const createActions = {
   addMap: map => ({ type: ADD_MAP, payload: { map } }),
   updateMap: (index, { map, style } = {}) => {
     if ((map || {}).id) {
-      throw 'ID should not be altered.'
+      throw new Error('ID should not be altered.')
     } else {
       return {
         type: UPDATE_MAP,
