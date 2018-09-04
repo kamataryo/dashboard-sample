@@ -10,8 +10,10 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
+
 import IconButton from '@material-ui/core/IconButton'
 import GroupIcon from '@material-ui/icons/Group'
+import AddIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import { createActions as createGroupsActions } from 'src/reducers/groups'
@@ -23,13 +25,30 @@ const styles = theme => ({
 })
 
 export const Groups = props => {
-  const { classes, groups, deleteGroup } = props
+  const { classes, groups, addGroup, deleteGroup } = props
   return (
     <div>
       <h1>{'Groups'}</h1>
+      <IconButton
+        style={{ marginLeft: 5 }}
+        onClick={() => {
+          const groupNames = groups.map(group => group.name)
+          let maxNewPrefix = 0
+          let newName = ''
+          do {
+            maxNewPrefix++
+            newName = `New Group (${maxNewPrefix})`
+          } while (groupNames.includes(newName))
+          // TODO: id should be numbered by server
+          addGroup({ id: `new-group-${maxNewPrefix}`, name: newName })
+        }}
+      >
+        <AddIcon />
+      </IconButton>
+
       <p>{'Configure your groups here.'}</p>
       {groups.map((group, index) => (
-        <div key={`each-map-link-to-${group.id}`} className={classes.paper}>
+        <div key={`each-group-link-to-${group.id}`} className={classes.paper}>
           <List dense={false}>
             <ListItem>
               <Link to={`/groups/${group.id}`}>
@@ -68,6 +87,8 @@ Groups.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  // dispatchProps
+  addGroup: PropTypes.func.isRequired,
   deleteGroup: PropTypes.func.isRequired,
 }
 
@@ -91,6 +112,7 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => {
   return {
+    addGroup: group => dispatch(createGroupsActions.addGroup(group)),
     deleteGroup: index => dispatch(createGroupsActions.deleteGroup(index)),
   }
 }
