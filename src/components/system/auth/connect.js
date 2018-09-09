@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { createActions as createAuthActions } from 'src/reducers/auth'
 import { createActions as createProfileActions } from 'src/reducers/profile'
+import { createActions as createUserActions } from 'src/reducers/user'
 
 /**
  * map state to props
@@ -11,6 +12,7 @@ import { createActions as createProfileActions } from 'src/reducers/profile'
 const mapStateToProps = state => {
   return {
     accessToken: state.auth.accessToken,
+    idToken: state.auth.idToken,
   }
 }
 
@@ -24,6 +26,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setTokens: tokens => dispatch(createAuthActions.setTokens(tokens)),
     setProfile: profile => dispatch(createProfileActions.setProfile(profile)),
+    setUser: user => dispatch(createUserActions.set(user)),
   }
 }
 

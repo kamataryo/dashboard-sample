@@ -9,6 +9,7 @@ import groupsReducer from './reducers/groups'
 import menuReducer from './reducers/menu'
 import mapsReducer from './reducers/maps'
 import profileReducer from './reducers/profile'
+import userReducer from './reducers/user'
 
 /**
  * middlewares
@@ -27,6 +28,7 @@ const store = createStore(
     menu: menuReducer,
     maps: mapsReducer,
     profile: profileReducer,
+    user: userReducer,
   }),
   applyMiddleware(...middlewares),
 )

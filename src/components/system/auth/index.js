@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import connect from './connect'
 import { auth } from 'src/middlewares/auth-middleware'
+import { api } from 'src/config'
 
 /**
  * provide authorization
@@ -15,9 +16,11 @@ export class Auth extends React.Component {
   static propTypes = {
     // stateProps
     accessToken: PropTypes.string.isRequired,
+    idToken: PropTypes.string.isRequired,
     // dispatchProps
     setTokens: PropTypes.func.isRequired,
     setProfile: PropTypes.func.isRequired,
+    setUser: PropTypes.func.isRequired,
   }
 
   /**
@@ -47,7 +50,19 @@ export class Auth extends React.Component {
     accessToken &&
       auth
         .getProfile(accessToken)
-        .then(profile => this.props.setProfile(profile))
+        .then(profile => {
+          this.props.setProfile(profile)
+          const { sub } = profile
+          const { idToken } = this.props
+          return fetch(`${api.endpoint}/users/${sub}`, {
+            method: 'GET',
+            headers: {
+              authorization: `Bearer ${idToken}`,
+            },
+          })
+        })
+        .then(res => res.json())
+        .then(user => console.log(user) || this.props.setUser(user))
         .catch(console.error)
   }
 

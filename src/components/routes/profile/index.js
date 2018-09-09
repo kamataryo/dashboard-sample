@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { createActions as createProfileAction } from 'src/reducers/profile'
+import { createActions as createUserActions } from 'src/reducers/user'
+import { api } from 'src/config'
+
 import Input from './partials/input'
 import Button from '@material-ui/core/Button'
 
@@ -12,37 +15,37 @@ export class Profile extends React.Component {
    */
   static propTypes = {
     // stateProps
-    accessToken: PropTypes.string.isRequired,
+    idToken: PropTypes.string.isRequired,
     profile: PropTypes.shape({
       sub: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      nickname: PropTypes.string.isRequired,
       picture: PropTypes.string.isRequired,
+    }).isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
     }).isRequired,
     // dispatchProps
     updateProfile: PropTypes.func.isRequired,
+    setUser: PropTypes.func.isRequired,
   }
 
-  /**
-   * componentDidMount
-   * @return {void}
-   */
-  componentDidMount() {
-    // this.props.auth
-    //   .getProfile()
-    //   .then(profile => this.setState({ ...this.state, profile }))
-    //   .catch(console.error)
-  }
-
-  createProfileUpdateHandler = key => value =>
+  createProfileUpdateHandler = key => value => {
     this.props.updateProfile({ [key]: value })
+    this.props.setUser({ ...this.props.user, [key]: value })
+  }
 
-  // TODO: request fails
-  createUpdateMetadataHandler = kv => () => {
-    // const { accessToken } = this.props
-    console.log('metadata: ' + JSON.stringify(kv))
-    // call API here
-    // patchUserMetadata(this.props.profile.sub, kv, console.log)
+  onSendClick = () => {
+    const { idToken, user } = this.props
+
+    fetch(`${api.endpoint}/users/${user.id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+        'Content-Type': 'appliation/json',
+      },
+      body: JSON.stringify(user),
+    })
   }
 
   /**
@@ -51,7 +54,8 @@ export class Profile extends React.Component {
    */
   render() {
     const {
-      profile: { sub, nickname, name, picture },
+      profile: { sub, name, picture },
+      user: { name: userName },
     } = this.props
     // const { auth } = this.props
     return (
@@ -66,31 +70,12 @@ export class Profile extends React.Component {
 
         <div style={{ display: 'flex' }}>
           <Input
-            label={'nickname'}
-            onChange={this.createProfileUpdateHandler('nickname')}
-            value={nickname}
-            style={{ flexGrow: 1 }}
-          />
-          <Button
-            variant={'text'}
-            color={'default'}
-            onClick={this.createUpdateMetadataHandler({ nickname })}
-          >
-            {'send'}
-          </Button>
-        </div>
-        <div style={{ display: 'flex' }}>
-          <Input
             label={'name'}
             onChange={this.createProfileUpdateHandler('name')}
-            value={name}
+            value={userName || name}
             style={{ flexGrow: 1 }}
           />{' '}
-          <Button
-            variant={'text'}
-            color={'default'}
-            onClick={this.createUpdateMetadataHandler({ name })}
-          >
+          <Button variant={'text'} color={'default'} onClick={this.onSendClick}>
             {'send'}
           </Button>
         </div>
@@ -107,8 +92,9 @@ export class Profile extends React.Component {
  */
 const mapStateToProps = state => {
   return {
-    accessToken: state.auth.accessToken,
+    idToken: state.auth.idToken,
     profile: state.profile,
+    user: state.user,
   }
 }
 
@@ -122,6 +108,7 @@ const mapDispatchToProps = dispatch => {
   return {
     updateProfile: profile =>
       dispatch(createProfileAction.updateProfile(profile)),
+    setUser: user => dispatch(createUserActions.set(user)),
   }
 }
 
