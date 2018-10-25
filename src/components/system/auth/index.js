@@ -61,8 +61,15 @@ export class Auth extends React.Component {
             },
           })
         })
-        .then(res => res.json())
-        .then(user => console.log(user) || this.props.setUser(user))
+        .then(res => {
+          if (res.ok) {
+            return res.json()
+          } else {
+            throw 'error'
+          }
+        })
+        .then(user => this.props.setUser(user))
+        // TODO: control display with error
         .catch(console.error)
   }
 
