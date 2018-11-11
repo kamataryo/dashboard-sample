@@ -1,7 +1,6 @@
 {
-  "name": "@tilecloud/dashboard",
+  "name": "@kamataryo/dashboard-sample",
   "version": "0.0.0",
-  "private": true,
   "dependencies": {
     "@material-ui/core": "^3.0.1",
     "@material-ui/icons": "^3.0.1",
@@ -27,7 +26,7 @@
     "_n": "node -pe 'require(\"./package.json\").name'",
     "_v": "node -pe 'require(\"./package.json\").version'"
   },
-  "homepage": "https://tilecloud.github.io/dashboard",
+  "homepage": "https://kamataryo.github.io/dashboard-sample",
   "devDependencies": {
     "eslint": "^5.5.0",
     "eslint-import-resolver-node": "^0.3.2",

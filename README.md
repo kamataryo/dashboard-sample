@@ -1,15 +1,9 @@
-# TileCloud Dashboard
-
-This porject is in development.
-
-[![Build Status](https://travis-ci.org/tilecloud/dashboard.svg?branch=master)](https://travis-ci.org/tilecloud/dashboard)
-
-DEMO: https://tilecloud.github.io/dashboard
+# Dashboard Sample
 
 ## development
 
 ```shell
-$ git clone git@github.com:tilecloud/dashboard.git
+$ git clone git@github.com:kamataryo/dashboard-sample.git
 $ cd dashboard
 $ yarn # or npm install
 $ yarn start # or npm test
